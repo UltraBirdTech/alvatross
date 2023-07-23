@@ -1,0 +1,73 @@
+{% extends 'valtan/basic/layout.html' %}
+
+{% block title %} VALTAN {% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <h1> <i class="far fa-envelope nav-icon"></i> Fishing Mail </h1>
+</div>
+<div>
+    <form action="{% url 'fishing_mail' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <div class="col-md-4">
+                To:
+            </div>
+            <div class="col-md-4">
+                <input type="email" name="to">
+            </div>
+        </div>
+        <div>
+            <div class="col-md-4">
+                Cc:
+            </div>
+            <div class="col-md-4">
+                <input type="email" name="cc">
+            </div>
+        </div>
+        <div>
+             <div class="col-md-4">
+                Subject:
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="subject">
+            </div>
+        </div>
+        <div>
+            <div class="col-md-4">
+                Message:
+            </div>
+            <div class="col-md-4">
+                <input type="textarea" name="message">
+            </div>
+        </div>
+        <div>
+            <div class="col-md-4">
+                Attached File:
+            </div>
+            <div class="col-md-4">
+                <input type="textarea" name="contents">
+            </div>
+        </div>
+        <div> 
+            <button type="submit">SEND</button>
+        </div>
+    </form>
+</div>
+<div>
+    {% if result %}
+        <h2>Ping Result</h2>
+        <div>SEARCH KEY: {{dist}}</div>
+        <table>
+            <tr>
+                <th>key</th><th>Value</th>
+            </tr>
+        {% for key, value in result.items %}
+            <tr>
+                <td>{{key}}</td><td>{{value}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

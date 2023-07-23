@@ -1,0 +1,56 @@
+{% extends 'valtan/basic/layout.html' %}
+
+{% block title %} VALTAN {% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <h1> <i class="fas fa-search"></i> nmap </h1>
+</div>
+<div class="col-md-12">
+    <form action="{% url 'nmap' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="target">
+        <button type="submit">SEND</button>
+    </form>
+</div>
+<div class="col-md-12">
+    {% if target %}
+        <h2>Nmap Result</h2>
+        <div>SEARCH KEY: {{target}}</div>
+        <table>
+            <tr>
+                <th>key</th><th>Value</th>
+            </tr>
+            <tr>
+                <td>HOST:</td>
+                <td>{{host}}({{hostname}})</td>
+            </tr>
+            <tr>
+                <td>STATE:</td>
+                <td>{{state}}</td>
+            </tr>
+             <tr>
+                <td>command:</td>
+                <td>{{command_line}}</td>
+            </tr>
+        </table>
+        <table>
+            {% for key, value in proto.items %}
+                <tr>
+                    <td>Protocol: </td><td>{{key}}</td>
+                </tr>
+                <tr>
+                    <th>PORT</th><th>STATUS</th>
+                </tr>
+                {% for key2, result in value.items %}
+                    {% for port, status in result.items %}
+                        <tr>
+                            <td>{{port}}</td><td>{{status}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
