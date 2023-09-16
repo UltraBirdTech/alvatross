@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.contrib.auth import logout as django_logout # logout() だと 本ソースコードの logout()と競合するため名前を変えている。
 from django.db.models import Q
 from django.contrib.auth.hashers import check_password
 
@@ -20,7 +21,7 @@ def index(request):
         user = user_list[0]
         if check_password(password, user.password):
             login(request, user)
-            return render(request, 'alVatross/index.html', params)
+            return redirect('/alVatross/')
 
         error_message = "パスワードが間違っています。"
         params['error'] = [error_message]
@@ -28,3 +29,8 @@ def index(request):
     
     # Get Rquest.
     return render(request, 'alVatross/login.html', params)
+
+def logout(request):
+    params = {}
+    django_logout(request)
+    return redirect('/alVatross/login')
