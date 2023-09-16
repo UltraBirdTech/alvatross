@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth import logout as django_logout
 from django.db.models import Q
@@ -21,7 +21,7 @@ def index(request):
         user = user_list[0]
         if check_password(password, user.password):
             login(request, user)
-            return render(request, 'alVatross/index.html', params)
+            return redirect('/alVatross/')
 
         error_message = "パスワードが間違っています。"
         params['error'] = [error_message]
@@ -33,5 +33,4 @@ def index(request):
 def logout(request):
     params = {}
     django_logout(request)
-    return render(request, 'alVatross/login.html', params)
-
+    return redirect('/alVatross/login')
