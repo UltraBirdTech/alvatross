@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth import logout as django_logout
+from django.contrib.auth import logout as django_logout # logout() だと 本ソースコードの logout()と競合するため名前を変えている。
 from django.db.models import Q
 from django.contrib.auth.hashers import check_password
 
