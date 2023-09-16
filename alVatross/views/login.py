@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import login
+from django.contrib.auth import logout as django_logout
 from django.db.models import Q
 from django.contrib.auth.hashers import check_password
 
@@ -28,3 +29,9 @@ def index(request):
     
     # Get Rquest.
     return render(request, 'alVatross/login.html', params)
+
+def logout(request):
+    params = {}
+    django_logout(request)
+    return render(request, 'alVatross/login.html', params)
+

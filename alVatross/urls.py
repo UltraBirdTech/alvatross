@@ -21,6 +21,7 @@ from .views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', views.login.index, name='login'),
+    path('alVatross/login/', views.login.index, name='login'),
+    path('alVatross/logout/', views.login.logout, name='logout'),
     path('alVatross/', views.index.index, name='index'),
 ]
