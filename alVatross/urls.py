@@ -25,5 +25,6 @@ urlpatterns = [
     path('alVatross/login/', views.login.index, name='login'),
     path('alVatross/logout/', views.login.logout, name='logout'),
     path('alVatross/post/', views.post.index, name='post'),
+    path('alVatross/post/insert', views.post.insert, name='insert_post'),
     path('alVatross/', views.index.index, name='index'),
 ]
