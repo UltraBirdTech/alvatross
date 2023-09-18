@@ -1,0 +1,31 @@
+{% extends 'alvatross/basic/layout.html' %}
+
+{% block title %} POST {% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <h1> New Post </h1>
+</div>
+<div class_"row">
+    <div class="col-md-12">
+        <table>
+            <form action="{% url 'insert_post' %}" method="post">
+                <div class_"row">
+                    <div class="col-md-12">
+                        {% csrf_token %}
+                        {{ add_post_form.as_table }}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                    </div>
+                </div>
+                <div class_"row">
+                    <div class="col-md-12">
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">New Post</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </table>
+    </div>
+</div>
+{% endblock %}
