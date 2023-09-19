@@ -10,9 +10,12 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __init__(self, **keywords):
+        self.error_messages = []
+        super().__init__()
+
     def __str__(self):
         return self.title
-    
 
     def clean(self):
         self.clean_title()
@@ -21,14 +24,16 @@ class Post(models.Model):
 
     def clean_title(self):
         if len(self.title) > 100:
-            raise ValidationError("タイトルの文字数が100文字を超えています")
+            self.error_messages.append("タイトルの文字数が100文字を超えています")
 
     def clean_content(self):
          if len(self.content) > 5000:
-            raise ValidationError("コンテンツの文字数が5000文字を超えています")
+            self.error_messages.append("コンテンツの文字数が5000文字を超えています")
 
     def clean_status(self):
+        print('*' * 100)
+        print(self.status)
         if not self.status in ['active', 'delete']:
-            raise ValidationError("ステータスに規定外の文字列が入力されています")
+            self.error_messages.append("ステータスに規定外の文字列が入力されています")
 
        
