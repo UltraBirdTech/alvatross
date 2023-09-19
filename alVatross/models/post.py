@@ -13,3 +13,22 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
+
+    def clean(self):
+        self.clean_title()
+        self.clean_content()
+        self.clean_status()
+
+    def clean_title(self):
+        if len(self.title) > 100:
+            raise ValidationError("タイトルの文字数が100文字を超えています")
+
+    def clean_content(self):
+         if len(self.content) > 5000:
+            raise ValidationError("コンテンツの文字数が5000文字を超えています")
+
+    def clean_status(self):
+        if not self.status in ['active', 'delete']:
+            raise ValidationError("ステータスに規定外の文字列が入力されています")
+
+       
