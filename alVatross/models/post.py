@@ -10,9 +10,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __init__(self, **keywords):
-        self.error_messages = []
-        super().__init__()
+#    def __init__(self, **keywords):
+#        print('*' * 100)
+#        self.error_messages = []
+#        super().__init__()
 
     def __str__(self):
         return self.title
