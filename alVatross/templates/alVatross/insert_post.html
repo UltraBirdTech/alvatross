@@ -24,6 +24,7 @@
                             {% csrf_token %}
                             {{ add_post_form.as_table }}
                             <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <input type="hidden" name="redirect_url" value="/alVatross/post">
                         </div>
                         <div class="col-md-12">
                             <div class="col-4">
