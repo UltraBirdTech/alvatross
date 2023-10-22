@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 from ..models.post import Post
@@ -24,10 +25,13 @@ def insert(request):
             status  = "active",
             user_id = request.POST.get("user_id"),
         )
-        if post.clean():
+        post.clean()
+        if len(post.error_messages) == 0:
             post.save()
-            return render(request, 'alVatross/post.html', params)
+            return redirect('/alVatross/post')
 
+        params['error'] = post.error_messages
+        print(post.error_messages)
     return render(request, 'alVatross/insert_post.html', params)
 
 def update(request):
