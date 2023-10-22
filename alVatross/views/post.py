@@ -12,6 +12,7 @@ def index(request):
     params['post_list'] = post_list
     return render(request, 'alVatross/post.html', params)
 
+@login_required
 def insert(request):
     params = {
         'add_post_form': AddPostForm(),
