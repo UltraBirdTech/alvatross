@@ -19,6 +19,7 @@ def insert(request):
     }
     if request.method == 'POST':
         params["add_post_form"] = AddPostForm(data=request.POST)
+        redirect_url = request.POST.get("redirect_url")
         post = Post(
             title   = request.POST.get("title"),
             content = request.POST.get("content"),
@@ -28,7 +29,7 @@ def insert(request):
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
-            return redirect('/alVatross/post')
+            return redirect(redirect_url)
 
         params['error'] = post.error_messages
         print(post.error_messages)
