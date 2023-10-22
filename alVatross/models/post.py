@@ -10,10 +10,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-#    def __init__(self, **keywords):
-#        print('*' * 100)
-#        self.error_messages = []
-#        super().__init__()
+    def __init__(self, *args, **kwargs):
+        self.error_messages = []
+        super().__init__(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -32,8 +31,6 @@ class Post(models.Model):
             self.error_messages.append("コンテンツの文字数が5000文字を超えています")
 
     def clean_status(self):
-        print('*' * 100)
-        print(self.status)
         if not self.status in ['active', 'delete']:
             self.error_messages.append("ステータスに規定外の文字列が入力されています")
 
