@@ -20,10 +20,12 @@
             <div class="col-md-12">
                 <table>
                     <form action="{% url 'update_post' id=post.id %}" method="post">
-                    <form>
                         <div class="col-md-12">
                             {% csrf_token %}
-                            {{ edit_post_form.as_table }}
+                            <div class="col-md-12">
+                                ID: {{ post.id }}
+                            </div>
+                           {{ edit_post_form.as_table }}
                             <input type="hidden" name="user_id" value="{{ user.id }}">
                             <input type="hidden" name="redirect_url" value="/alVatross/post">
                         </div>
@@ -34,6 +36,12 @@
                         </div>
                     </form>
                 </table>
+                <div class="col-md-12">
+                    Created At: {{ post.created_at }}
+                </div>
+                 <div class="col-md-12">
+                    Updated At: {{ post.updated_at }}
+                </div>
             </div>
             </div>
         </div>
