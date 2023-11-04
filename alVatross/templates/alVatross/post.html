@@ -50,6 +50,10 @@
                                             <form action="{% url 'update_post' id=post.id %}">
                                                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
                                             </form>
+                                            <form action="{% url 'delete_post' id=post.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                                            </form>
                                         {% endif %}
                                     </td>
                                 </tr>
