@@ -22,11 +22,11 @@ from .views import post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('alVatross/', views.index.index, name='index'),
     path('alVatross/login', views.login.index, name='login'),
     path('alVatross/logout', views.login.logout, name='logout'),
     path('alVatross/post/', views.post.index, name='post'),
     path('alVatross/post/insert', views.post.insert, name='insert_post'),
     path("alVatross/post/<int:id>", views.post.update, name='update_post'),
     path("alVatross/post/delete/<int:id>", views.post.delete, name='delete_post'),
-    path('alVatross', views.index.index, name='index'),
 ]
