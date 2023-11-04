@@ -31,4 +31,5 @@ urlpatterns = [
     path("alVatross/post/<int:id>", views.post.update, name='update_post'),
     path("alVatross/post/delete/<int:id>", views.post.delete, name='delete_post'),
     path('alVatross/users/', views.users.index, name='user_list'),
+    path('alVatross/users/insert', views.users.insert, name='insert_user'),
 ]
