@@ -3,39 +3,37 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
+from ..form.user import UserForm
 
 @login_required
 def index(request):
-    params = {}
-    print('=' * 100)
+    params = {
+        'login_user': request.user
+    }
     user_list = User.objects.all()
     params['user_list'] = user_list
-    print(user_list)
     return render(request, 'alVatross/user.html', params)
 
 @login_required
 def insert(request):
     params = {
-        'add_post_form': AddPostForm(),
-        'user': request.user
+        'add_user_form': UserForm(),
+        'login_user': request.user
     }
     if request.method == 'POST':
-        params["add_post_form"] = AddPostForm(data=request.POST)
+        params["add_user_form"] = UserForm(data=request.POST)
         redirect_url = request.POST.get("redirect_url")
-        post = Post(
-            title   = request.POST.get("title"),
-            content = request.POST.get("content"),
-            status  = "active",
-            user_id = request.POST.get("user_id"),
+        user = User(
+            username = request.POST.get("username"),
+            email = request.POST.get("email"),
+            password = request.POST.get("password")
         )
-        post.clean()
-        if len(post.error_messages) == 0:
-            post.save()
-            return redirect(redirect_url)
+        user.save()
+        return redirect('/alVatross/users/')
 
         params['error'] = post.error_messages
-        print(post.error_messages)
-    return render(request, 'alVatross/insert_post.html', params)
+        print(user.error_messages)
+    return render(request, 'alVatross/insert_user.html', params)
 
 @login_required
 def update(request, id):
