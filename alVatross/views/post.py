@@ -59,5 +59,8 @@ def update(request, id):
         params['error'] = post.error_messages
     return render(request, 'alVatross/update_post.html', params)
 
-def delete(request):
-    pass
+@login_required
+def delete(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
+    return redirect('/alVatross/post')
