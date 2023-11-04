@@ -8,11 +8,13 @@
 </div>
 <div class_"row">
     <div class="col-md-12">
-        <form action="{% url 'insert_post' %}">
+        {% if login_user.is_superuser %}
+        <form action="{% url 'insert_user' %}">
             <div class="col-4">
                 <button type="submit" class="btn btn-primary btn-block">New User</button>
             </div>
         </form>
+        {% endif %}
     </div>
     <section class="content">
         <div class="container-fluid">
@@ -48,6 +50,7 @@
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.last_login }}</td>
                                     <td>
+                                        {% if login_user.is_superuser %}
                                             <form action="">
                                                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
                                             </form>
@@ -55,6 +58,7 @@
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-danger btn-block">Delete</button>
                                             </form>
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}
