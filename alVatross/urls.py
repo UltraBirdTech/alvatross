@@ -20,6 +20,7 @@ from .views import login
 from .views import index
 from .views import post
 from .views import users
+from .views import myprofile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     path("alVatross/post/delete/<int:id>", views.post.delete, name='delete_post'),
     path('alVatross/users/', views.users.index, name='user_list'),
     path('alVatross/users/insert', views.users.insert, name='insert_user'),
+    path("alVatross/myprofile/<int:id>", views.myprofile.index, name='myprofile'),
 ]
