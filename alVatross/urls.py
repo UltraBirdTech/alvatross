@@ -33,5 +33,5 @@ urlpatterns = [
     path("alVatross/post/delete/<int:id>", views.post.delete, name='delete_post'),
     path('alVatross/users/', views.users.index, name='user_list'),
     path('alVatross/users/insert', views.users.insert, name='insert_user'),
-    path("alVatross/myprofile/<int:id>", views.myprofile.index, name='myprofile'),
+    path("alVatross/myprofile", views.myprofile.index, name='myprofile'),
 ]
