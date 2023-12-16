@@ -14,6 +14,7 @@ def index(request):
         'login_user': request.user,
     }
 
+    # TODO: SSTIの実装途中
     #template_engine = Engine()
    # layout_template = loader.get_template('layout.html')
     index_template = loader.get_template('myprofile.html')
