@@ -28,35 +28,34 @@ def insert(request):
             email = request.POST.get("email"),
             password = request.POST.get("password")
         )
+        user.clean()
         user.save()
         return redirect('/alVatross/users/')
 
-        params['error'] = post.error_messages
+        params['error'] = user.error_messages
         print(user.error_messages)
     return render(request, 'alVatross/insert_user.html', params)
 
 @login_required
 def update(request, id):
-    post = Post.objects.get(id=id)
+    user = User.objects.get(id=id)
     params = {
-        'edit_post_form': EditPostForm(instance=post),
-        'user': request.user,
-        'post': post
+        'edit_user_form': UserForm(instance=user),
+        'login_user': request.user,
+        'user': user 
     }
     if request.method == 'POST':
-        params["edit_post_form"] = EditPostForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
-        post = Post.objects.get(id=id)
-        post.title = request.POST.get("title")
-        post.content = request.POST.get("content")
-        post.user_id = request.POST.get("user_id")
-        post.clean()
-        if len(post.error_messages) == 0:
-            post.save()
-            return redirect(redirect_url)
+        params["edit_post_form"] = UserForm(data=request.POST)
+        user = User.objects.get(id=id)
+        user.username = request.POST.get("username")
+        user.email = request.POST.get("email")
+        user.password = request.POST.get("password")
+        if not user.clean():
+            user.save()
+            return redirect('/alVatross/users/')
 
         params['error'] = post.error_messages
-    return render(request, 'alVatross/update_post.html', params)
+    return render(request, 'alVatross/update_user.html', params)
 
 @login_required
 def delete(request, id):

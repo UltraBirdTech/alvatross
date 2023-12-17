@@ -51,7 +51,7 @@
                                     <td>{{ user.last_login }}</td>
                                     <td>
                                         {% if login_user.is_superuser %}
-                                            <form action="">
+                                            <form action="{% url 'update_user' id=user.id %}">
                                                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
                                             </form>
                                             <form action="" method="post">
