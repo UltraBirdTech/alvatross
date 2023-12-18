@@ -54,7 +54,7 @@
                                             <form action="{% url 'update_user' id=user.id %}">
                                                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
                                             </form>
-                                            <form action="" method="post">
+                                            <form action="{% url 'delete_user' id=user.id %}" method="post">
                                                 {% csrf_token %}
                                                 <button type="submit" class="btn btn-danger btn-block">Delete</button>
                                             </form>

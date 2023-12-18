@@ -59,6 +59,13 @@ def update(request, id):
 
 @login_required
 def delete(request, id):
-    post = Post.objects.get(id=id)
-    post.delete()
-    return redirect('/alVatross/post')
+    user= User.objects.get(id=id)
+    params = {}
+    if user.id == id:
+        params['error'] = '自分自身を削除することはできません'
+
+    if user.is_superuser:
+        params['error'] = '管理者権限ユーザは削除できません'
+        
+    user.delete()
+    return redirect('/alVatross/users')
