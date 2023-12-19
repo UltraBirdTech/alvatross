@@ -50,7 +50,6 @@ def update(request, id):
         post = Post.objects.get(id=id)
         post.title = request.POST.get("title")
         post.content = request.POST.get("content")
-        post.user_id = request.POST.get("user_id")
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
