@@ -23,11 +23,6 @@ def index(request):
             login(request, user)
             return redirect('/alVatross/')
 
-        # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
-        if password == user.password:
-            login(request, user)
-            return redirect('/alVatross/')
-
         error_message = "パスワードが間違っています。"
         params['error'] = [error_message]
         return render(request, 'alVatross/login.html', params)
