@@ -36,4 +36,5 @@ urlpatterns = [
     path('alVatross/users/<int:id>', views.users.update, name='update_user'),
     path('alVatross/users/delete/<int:id>', views.users.delete, name='delete_user'),
     path("alVatross/myprofile", views.myprofile.index, name='myprofile'),
+    path("alVatross/forget_password/", views.login.forget_password, name='forget_password'),
 ]
