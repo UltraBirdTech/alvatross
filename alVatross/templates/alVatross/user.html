@@ -29,7 +29,9 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>Login ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
                                     <th>User Type</th>
                                     <th>Email Address</th>
                                     <th>LastLogin</th>
@@ -40,9 +42,11 @@
                                 <tr>
                                     <td>{{ user.id }}</td>
                                     <td>{{ user.username }}</td>
+                                    <td>{{ user.first_name}}</td>
+                                    <td>{{ user.last_name}}</td>
                                     <td>
                                         {% if user.is_superuser %}
-                                            Admin User
+                                            Admin
                                         {% else %}
                                             User
                                         {% endif %}
