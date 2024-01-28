@@ -66,6 +66,8 @@ def forget_password(request):
         '
         engine = Engine()
         template = engine.from_string(template_code=template_code)
-        return HttpResponse(template.render(), request)
+        context = RequestContext(request)
+        context.push({"name": "TEST"})
+        return HttpResponse(template.render(context), request)
 
     return render(request, 'alVatross/forget_password.html', params)
