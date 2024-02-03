@@ -30,7 +30,7 @@ jobs:
         ls -la
         ls -la alVatross/templates/
         ls -la alVatross/templates/alVatross/
-        ls -la alVatross/templates/alVatross/alvatross/
+        ls -la alVatross/templates/alVatross/basic/
         coverage run --source '.' manage.py test
         coverage report
     - name: Bandit Run
