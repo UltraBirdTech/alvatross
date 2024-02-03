@@ -1,0 +1,43 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        ls -la
+        ls -la alVatross/templates/
+        ls -la alVatross/templates/alVatross/
+        ls -la alVatross/templates/alVatross/basic/
+        coverage run --source '.' manage.py test
+        coverage report
+    - name: Bandit Run
+      run: |
+        # 脆弱性のあるWebアプリなので静的解析で落ちるのでコメント
+#        bandit -r ./
+    - name: Pyt Run
+      run: |
+        # 脆弱性のあるWebアプリなので静的解析で落ちるのでコメント
+#        pyt -a D .
