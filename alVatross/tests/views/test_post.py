@@ -51,24 +51,12 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_post_insert_success_title_100_char(self):
-        params = {
-            'title': 't' * 100,
-            'content': 'test content',
-            'status': 'active',
-            'user_id' : self.user.id,
-            'redirect_url': '/alvatross/post'
-        }
+        self.params['title'] = 't' * 100
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
 
     def test_post_insert_invalid_title_101_char(self):
-        params = {
-            'title': 't' * 101,
-            'content': 'test content',
-            'status': 'active',
-            'user_id' : self.user.id,
-            'redirect_url': '/alvatross/post'
-        }
+        self.params['title'] = 't' * 101
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'タイトルの文字数が100文字を超えています')
