@@ -25,20 +25,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: DB Migration
-      run: |
-        python manage.py showmigrations
-#        python manage.py migrate
-#        python manage.py showmigrations
     - name: Run Tests
       run: |
         coverage run --source '.' manage.py test
         coverage report
-    - name: Bandit Run
-      run: |
-        # 脆弱性のあるWebアプリなので静的解析で落ちるのでコメント
-#        bandit -r ./
-    - name: Pyt Run
-      run: |
-        # 脆弱性のあるWebアプリなので静的解析で落ちるのでコメント
-#        pyt -a D .
