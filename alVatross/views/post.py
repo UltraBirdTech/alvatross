@@ -33,7 +33,6 @@ def insert(request):
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
-        print(post.error_messages)
     return render(request, 'alvatross/insert_post.html', params)
 
 @login_required
