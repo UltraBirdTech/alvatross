@@ -20,7 +20,7 @@ def index(request):
         if len(user_list) == 0:
             error_message = "指定されたユーザが存在しません。"
             params['error'] = [error_message]
-            return render(request, 'alVatross/login.html', params)
+            return render(request, 'alvatross/login.html', params)
 
         # user は loginid で検索した場合は一意なのでゼロ要素目を取得する。
         user = user_list[0]
@@ -35,10 +35,10 @@ def index(request):
 
         error_message = "パスワードが間違っています。"
         params['error'] = [error_message]
-        return render(request, 'alVatross/login.html', params)
+        return render(request, 'alvatross/login.html', params)
     
     # Get Rquest.
-    return render(request, 'alVatross/login.html', params)
+    return render(request, 'alvatross/login.html', params)
 
 def logout(request):
     params = {}
@@ -54,7 +54,7 @@ def forget_password(request):
         if len(user_list) == 0:
             error_message = "指定されたユーザが存在しません。"
             params['error'] = [error_message]
-            return render(request, 'alVatross/forget_password.html', params)
+            return render(request, 'alvatross/forget_password.html', params)
         
         user = user_list[0]
         template_code = '<!DOCTYPE html><html><body>\
@@ -70,4 +70,4 @@ def forget_password(request):
         context.push({"name": "TEST"})
         return HttpResponse(template.render(context), request)
 
-    return render(request, 'alVatross/forget_password.html', params)
+    return render(request, 'alvatross/forget_password.html', params)

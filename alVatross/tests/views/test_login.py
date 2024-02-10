@@ -89,4 +89,3 @@ class BeforeLoginTest(TestCase):
     def test_initialize_before_login(self):
         response = self.client.get('/alVatross/login')
         self.assertEqual(response.status_code, 200)
-
