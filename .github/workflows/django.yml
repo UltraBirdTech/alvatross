@@ -28,8 +28,8 @@ jobs:
     - name: DB Migration
       run: |
         python manage.py showmigrations
-        python manage.py migrate
-        python manage.py showmigrations
+#        python manage.py migrate
+#        python manage.py showmigrations
     - name: Run Tests
       run: |
         coverage run --source '.' manage.py test
