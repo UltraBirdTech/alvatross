@@ -47,6 +47,7 @@ class PostTest(TestCase):
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
 
+    # title
     def test_post_insert_success_title_99_char(self):
         self.params['title'] = 't' * 99
         response = self.client.post('/alVatross/post/insert', self.params)
@@ -62,6 +63,42 @@ class PostTest(TestCase):
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'タイトルの文字数が100文字を超えています')
+
+    # contents
+    def test_post_insert_success_content_4999_char(self):
+        self.params['content'] = 't' * 4999
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
+    def test_post_insert_success_content_5000_char(self):
+        self.params['content'] = 't' * 5000
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
+    def test_post_insert_invalid_content_5001_char(self):
+        self.params['content'] = 't' * 5001
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'コンテンツの文字数が5000文字を超えています')
+
+    # status
+    def test_post_insert_success_status_active(self):
+        self.params['status'] = 'active'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
+    # 作成時は"active"固定のため問題なく200
+    def test_post_insert_success_status_delete(self):
+        self.params['status'] = 'delete'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
+    # 作成時は"active"固定のため問題なく200
+    def test_post_insert_invalid_status_else(self):
+        self.params['content'] = 'test'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
 
     ########################################
     # test post edit.
