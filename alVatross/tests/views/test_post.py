@@ -64,6 +64,12 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'タイトルの文字数が100文字を超えています')
 
+    # XSSを挿れてもエラーにならない
+    def test_post_insert_success_title_XSS(self):
+        self.params['title'] = '<s>test</s>'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
     # contents
     def test_post_insert_success_content_4999_char(self):
         self.params['content'] = 't' * 4999
@@ -80,6 +86,13 @@ class PostTest(TestCase):
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'コンテンツの文字数が5000文字を超えています')
+
+    # XSSを挿れてもエラーにならない
+    def test_post_insert_success_content_XSS(self):
+        self.params['content'] = '<s>test</s>'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+
 
     # status
     def test_post_insert_success_status_active(self):
@@ -99,6 +112,12 @@ class PostTest(TestCase):
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
 
+    # redirect URL.
+    def test_post_insert_redirect_url(self):
+        self.params['redirect_url'] = 'https://example.com/'
+        response = self.client.post('/alVatross/post/insert', self.params)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, 'https://example.com/')
 
     ########################################
     # test post edit.
