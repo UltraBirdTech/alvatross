@@ -12,6 +12,9 @@ class PostTest(TestCase):
         self.client = Client()
         self.client.force_login(self.user)
 
+        print('*' * 100)
+        print(self.user.id)
+        print('*' * 100)
         self.post = Post.objects.create(
             title = 'test post',
             content = 'test content',
