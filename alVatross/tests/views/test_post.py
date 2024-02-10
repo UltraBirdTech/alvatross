@@ -13,6 +13,7 @@ class PostTest(TestCase):
         self.client.force_login(self.user)
 
         print('*' * 100)
+        print(user)
         print(self.user.id)
         print('*' * 100)
         self.post = Post.objects.create(
