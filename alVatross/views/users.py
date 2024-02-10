@@ -12,7 +12,7 @@ def index(request):
     }
     user_list = User.objects.all()
     params['user_list'] = user_list
-    return render(request, 'alVatross/user.html', params)
+    return render(request, 'alvatross/user.html', params)
 
 @login_required
 def insert(request):
@@ -36,7 +36,7 @@ def insert(request):
 
         params['error'] = user.error_messages
         print(user.error_messages)
-    return render(request, 'alVatross/insert_user.html', params)
+    return render(request, 'alvatross/insert_user.html', params)
 
 @login_required
 def update(request, id):
@@ -59,7 +59,7 @@ def update(request, id):
             return redirect('/alVatross/users/')
 
         params['error'] = post.error_messages
-    return render(request, 'alVatross/update_user.html', params)
+    return render(request, 'alvatross/update_user.html', params)
 
 @login_required
 def delete(request, id):

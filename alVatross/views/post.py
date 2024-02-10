@@ -10,7 +10,7 @@ def index(request):
     params = {}
     post_list = Post.objects.all()
     params['post_list'] = post_list
-    return render(request, 'alVatross/post.html', params)
+    return render(request, 'alvatross/post.html', params)
 
 @login_required
 def insert(request):
@@ -34,7 +34,7 @@ def insert(request):
 
         params['error'] = post.error_messages
         print(post.error_messages)
-    return render(request, 'alVatross/insert_post.html', params)
+    return render(request, 'alvatross/insert_post.html', params)
 
 @login_required
 def update(request, id):
@@ -56,7 +56,7 @@ def update(request, id):
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
-    return render(request, 'alVatross/update_post.html', params)
+    return render(request, 'alvatross/update_post.html', params)
 
 @login_required
 def delete(request, id):
