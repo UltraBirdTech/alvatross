@@ -65,11 +65,13 @@ def update(request, id):
 def delete(request, id):
     user= User.objects.get(id=id)
     params = {}
-    if user.id == id:
+    if request.user.id == id:
         params['error'] = '自分自身を削除することはできません'
+        return render(request, 'alvatross/user.html', params)
 
     if user.is_superuser:
         params['error'] = '管理者権限ユーザは削除できません'
+        return render(request, 'alvatross/user.html', params)
         
     user.delete()
     return redirect('/alVatross/users')
