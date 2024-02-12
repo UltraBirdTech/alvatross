@@ -16,23 +16,23 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">名前</div>
-                            <div class="col-md-6">{{login_user.username}}</div>
+                            <div class="col-md-6">{{ login_user.username }}</div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">メールアドレス</div>
-                            <div class="col-md-6">{{login_user.email}}</div>
+                            <div class="col-md-6">{{ login_user.email }}</div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">姓</div>
-                            <div class="col-md-6">#LAST_NAME#</div>
+                            <div class="col-md-6">{{ login_user.first_name }}</div>
                         </div>
                          <div class="row">
                             <div class="col-md-4">名</div>
-                            <div class="col-md-6">#FIRST_NAME#</div>
+                            <div class="col-md-6">{{ login_user.last_name }}</div>
                         </div>
                          <div class="row">
                             <div class="col-md-4">最終ログイン日時</div>
-                            <div class="col-md-6">{{login_user.leatst_login}}</div>
+                            <div class="col-md-6">{{ login_user.last_login }}</div>
                         </div>
  
                    </div>
