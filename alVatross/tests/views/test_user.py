@@ -60,7 +60,7 @@ class UserTest(TestCase):
         response = self.client.post('/alVatross/users/' + str(user.id), self.params)
         self.assertEqual(response.status_code, 302) 
 
-    def test_user_insert_duplicate_username(self):
+    def test_user_update_duplicate_username(self):
         user = User.objects.create(username = 'test user2')
         self.params['username'] = 'test user'
         response = self.client.post('/alVatross/users/' + str(user.id), self.params)
