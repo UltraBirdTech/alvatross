@@ -37,11 +37,18 @@ class UserTest(TestCase):
         response = self.client.post('/alVatross/users/insert', self.params)
         self.assertEqual(response.status_code, 302)    
 
+    def test_user_insert_duplicate_username(self):
+        self.params['username'] = 'test user'
+        response = self.client.post('/alVatross/users/insert', self.params)
+        self.assertEqual(response.status_code, 200)    
+        self.assertContains(response, '指定されたusernameは既に登録されています')
+
     ########################################
     # test user update.
     ######################################## 
     def test_initialize_user_edit(self):
-        response = self.client.get('/alVatross/users/' + str(self.user.id))
+        user = User.objects.create(username = 'test user2')
+        response = self.client.get('/alVatross/users/' + str(user.id))
         self.assertEqual(response.status_code, 200)
 
     def test_user_edit_404(self):
@@ -49,8 +56,16 @@ class UserTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_user_edit(self):
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        user = User.objects.create(username = 'test user2')
+        response = self.client.post('/alVatross/users/' + str(user.id), self.params)
         self.assertEqual(response.status_code, 302) 
+
+    def test_user_insert_duplicate_username(self):
+        user = User.objects.create(username = 'test user2')
+        self.params['username'] = 'test user'
+        response = self.client.post('/alVatross/users/' + str(user.id), self.params)
+        self.assertEqual(response.status_code, 200)    
+        self.assertContains(response, '指定されたusernameは既に登録されています')
 
     ########################################
     # test user delete.

@@ -23,6 +23,7 @@ def insert(request):
     if request.method == 'POST':
         params["add_user_form"] = UserForm(data=request.POST)
         redirect_url = request.POST.get("redirect_url")
+
         user = User(
             username = request.POST.get("username"),
             email = request.POST.get("email"),
@@ -30,6 +31,12 @@ def insert(request):
             first_name = request.POST.get("first_name"),
             last_name = request.POST.get("last_name")
         )
+
+        # duplicate check.
+        if User.objects.filter(username=user.username):
+             params['error'] = ['指定されたusernameは既に登録されています']
+             return render(request, 'alvatross/insert_user.html', params)
+
         user.clean()
         user.save()
         return redirect('/alVatross/users/')
@@ -54,6 +61,12 @@ def update(request, id):
         user.password = request.POST.get("password")
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
+
+        # duplicate check.
+        if User.objects.filter(username=user.username):
+            params['error'] = ['指定されたusernameは既に登録されています']
+            return render(request, 'alvatross/update_user.html', params)
+
         if not user.clean():
             user.save()
             return redirect('/alVatross/users/')
