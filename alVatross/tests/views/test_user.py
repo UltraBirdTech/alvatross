@@ -29,5 +29,47 @@ class UserTest(TestCase):
     ########################################
     # test user isnert.
     ######################################## 
-    
- 
+    def test_initialize_user_insert(self):
+        response = self.client.get('/alVatross/users/insert')
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_insert(self):
+        response = self.client.post('/alVatross/users/insert', self.params)
+        self.assertEqual(response.status_code, 302)    
+
+    ########################################
+    # test user update.
+    ######################################## 
+    def test_initialize_user_edit(self):
+        response = self.client.get('/alVatross/users/' + str(self.user.id))
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_edit_404(self):
+        response = self.client.get('/alVatross/users/missing_user_id')
+        self.assertEqual(response.status_code, 404)
+
+    def test_user_edit(self):
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.assertEqual(response.status_code, 302) 
+
+    ########################################
+    # test user delete.
+    ########################################
+    def test_user_delete(self):
+        user = User.objects.create(
+            username = 'test delete user'
+        )
+        response = self.client.get('/alVatross/users/delete/' + str(user.id))
+        self.assertEqual(response.status_code, 302)
+
+    def test_user_delete_invalid_self(self):
+        response = self.client.get('/alVatross/users/delete/' + str(self.user.id))
+        self.assertEqual(response.status_code, 200)
+        # self.assertContains(response, '自分自身を削除することはできません')
+
+    def test_user_delete_404(self):
+        response = self.client.get('/alVatross/users/delete/missing_post_id')
+        self.assertEqual(response.status_code, 404)
+
+    # TODO: Should write test code about admin user deete.
+
