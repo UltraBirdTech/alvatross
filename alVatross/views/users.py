@@ -37,12 +37,11 @@ def insert(request):
              params['error'] = ['指定されたusernameは既に登録されています']
              return render(request, 'alvatross/insert_user.html', params)
 
-        user.clean()
-        user.save()
-        return redirect('/alVatross/users/')
+        if not user.clean():
+            user.save()
+            return redirect('/alVatross/users/')
 
         params['error'] = user.error_messages
-        print(user.error_messages)
     return render(request, 'alvatross/insert_user.html', params)
 
 @login_required
