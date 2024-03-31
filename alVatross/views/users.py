@@ -27,7 +27,7 @@ def insert(request):
         user = User(
             username = request.POST.get("username"),
             email = request.POST.get("email"),
-            password = request.POST.get("password"),
+            password = request.POST.get("password")[0:20],
             first_name = request.POST.get("first_name"),
             last_name = request.POST.get("last_name")
         )
@@ -57,7 +57,7 @@ def update(request, id):
         user = User.objects.get(id=id)
         user.username = request.POST.get("username")
         user.email = request.POST.get("email")
-        user.password = request.POST.get("password")
+        user.password = request.POST.get("password")[0:20],
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
 
