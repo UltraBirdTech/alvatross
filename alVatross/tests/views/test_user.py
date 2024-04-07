@@ -96,7 +96,7 @@ class UserTest(TestCase):
         user = User.objects.create(username = 'test user2')
         response = self.client.post('/alVatross/users/' + str(user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        user = User.objects.get(username='test user2')
+        user = User.objects.get(id=user.id)
         self.assertEqual(user.password, 't' * 19)
 
     def test_user_update_cut_password_20_char(self):
@@ -104,9 +104,7 @@ class UserTest(TestCase):
         user = User.objects.create(username = 'test user2')
         response = self.client.post('/alVatross/users/' + str(user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        print(user.username)
-        print(User.objects.get(username=user.username))
-        user = User.objects.get(username=user.username)
+        user = User.objects.get(id=user.id)
         self.assertEqual(user.password, 't' * 20)
 
     def test_user_insert_cut_password_21_char(self):
@@ -114,7 +112,7 @@ class UserTest(TestCase):
         user = User.objects.create(username = 'test user2')
         response = self.client.post('/alVatross/users/' + str(user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        user = User.objects.get(username=user.username)
+        user = User.objects.get(id=user.id)
         self.assertEqual(user.password, 't' * 20)
 
     ########################################
