@@ -93,21 +93,21 @@ class UserTest(TestCase):
         self.params['password'] = 't' * 19
         response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        user = User.objects.get(id=user.id)
+        user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 19)
 
     def test_user_update_cut_password_20_char(self):
         self.params['password'] = 't' * 20
         response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        user = User.objects.get(id=user.id)
+        user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)
 
     def test_user_update_cut_password_21_char(self):
         self.params['password'] = 't' * 21
         response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
         self.assertEqual(response.status_code, 302)    
-        user = User.objects.get(id=user.id)
+        user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)
 
     ########################################
