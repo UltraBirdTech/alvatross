@@ -57,7 +57,17 @@ def update(request, id):
         user = User.objects.get(id=id)
         user.username = request.POST.get("username")
         user.email = request.POST.get("email")
+        print(user)
+        print(user.password)
+        print('0' * 100)
+        print(user.password)
+        print('1' * 100)
+        print(request.POST.get("password"))
+        print('2' * 100)
+        print(request.POST.get("password")[0:20])
         user.password = request.POST.get("password")[0:20],
+        print('3' * 100)
+        print(user.password)
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
 
