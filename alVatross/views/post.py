@@ -8,7 +8,13 @@ from ..form.post import AddPostForm, EditPostForm
 @login_required
 def index(request):
     params = {}
-    post_list = Post.objects.all()
+    query= request.GET.get("query", None)
+
+    if query:
+        post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
+    else:
+        post_list = Post.objects.all()
+
     params['post_list'] = post_list
     return render(request, 'alvatross/post.html', params)
 

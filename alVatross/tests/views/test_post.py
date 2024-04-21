@@ -13,7 +13,7 @@ class PostTest(TestCase):
         self.client.force_login(self.user)
 
         # MEMO: おまじない
-        print(self.user)
+        self.user
         self.post = Post.objects.create(
             title = 'test post',
             content = 'test content',
@@ -35,7 +35,7 @@ class PostTest(TestCase):
     def test_initialize(self):
         response = self.client.get('/alVatross/post/')
         self.assertEqual(response.status_code, 200)
-
+ 
     ########################################
     # test post insert.
     ########################################

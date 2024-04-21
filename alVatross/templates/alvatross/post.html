@@ -21,7 +21,19 @@
                     <div class="card-header">
                         <h3>POST</h3>
                     </div>
-                    <div class="card-body">
+                   <div class="card-body">
+                        <div class="col-md-8">
+                            <form method="get">
+                                <input type="search" 
+                                        value="{{ request.GET.query }}"
+                                        placeholder="Please input search Query."
+                                        name="query">
+                                <button>Search.</Button>
+                            </form>
+                            {% if request.GET.query %}
+                                Your search query is {{request.GET.query}}.
+                            {% endif %}
+                        </div>
                         {% if post_list %}
                         <table class="table table-bordered">
                             <thead>
