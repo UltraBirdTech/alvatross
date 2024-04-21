@@ -30,6 +30,9 @@
                                         name="query">
                                 <button>Search.</Button>
                             </form>
+                            {% if request.GET.query %}
+                                Your search query is {{request.GET.query}}.
+                            {% endif %}
                         </div>
                         {% if post_list %}
                         <table class="table table-bordered">
