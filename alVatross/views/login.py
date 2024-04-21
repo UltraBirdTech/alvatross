@@ -11,32 +11,41 @@ from django.template import Context, Template
 from django.template import RequestContext
 from django.http import HttpResponse
 
+from django.db import connection
+
 def index(request):
     params = {}
     if request.method == 'POST':
         name = request.POST.get('loginid', None)
         password = request.POST.get('password', None)
         user_list = User.objects.filter(username=name)
-        if len(user_list) == 0:
+
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM auth_user WHERE username=%s and password=%s", [name, password])
+        user_liset = dictfetchall(cursor)
+        if len(user_list) != 0:
+            # user は loginid で検索した場合は一意なのでゼロ要素目を取得する。
+            user_dict = user_list[0]
+            if check_password(password, user_dict['password']):
+                user = User.objects.get(username=user_dict['name'])
+                login(request, user)
+                return redirect('/alVatross/')
+
+            # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
+            elif password == user_dict['password']:
+                user = User.objects.get(username=user_dict['name'])
+                login(request, user)
+                return redirect('/alVatross/')
+            else:
+                error_message = "パスワードが間違っています。"
+                params['error'] = [error_message]
+                return render(request, 'alvatross/login.html', params)
+        else:
             error_message = "指定されたユーザが存在しません。"
             params['error'] = [error_message]
             return render(request, 'alvatross/login.html', params)
 
-        # user は loginid で検索した場合は一意なのでゼロ要素目を取得する。
-        user = user_list[0]
-        if check_password(password, user.password):
-            login(request, user)
-            return redirect('/alVatross/')
-
-        # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
-        if password == user.password:
-            login(request, user)
-            return redirect('/alVatross/')
-
-        error_message = "パスワードが間違っています。"
-        params['error'] = [error_message]
-        return render(request, 'alvatross/login.html', params)
-    
+   
     # Get Rquest.
     return render(request, 'alvatross/login.html', params)
 
@@ -71,3 +80,10 @@ def forget_password(request):
         return HttpResponse(template.render(context), request)
 
     return render(request, 'alvatross/forget_password.html', params)
+
+def dictfetchall(cursor):
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
