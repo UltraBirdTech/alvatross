@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from django.contrib.auth.models import User
 from ..form.user import UserForm
@@ -11,7 +12,20 @@ def index(request):
         'login_user': request.user
     }
     user_list = User.objects.all()
+    query= request.GET.get("query", None)
+
+    if query:
+        print(query)
+        user_list = User.objects.filter(
+            Q(id__contains=query)|
+            Q(first_name__contains=query)|
+            Q(last_name__contains=query)|
+            Q(email__contains=query)
+        )
+    else:
+        user_list = User.objects.all()
     params['user_list'] = user_list
+    params['query'] = query
     return render(request, 'alvatross/user.html', params)
 
 @login_required
