@@ -13,17 +13,25 @@ def index(request):
     }
     user_list = User.objects.all()
     query= request.GET.get("query", None)
-
+    user_type = request.GET.get("user_type")
+    user_list = User.objects.all()
     if query:
-        print(query)
         user_list = User.objects.filter(
             Q(id__contains=query)|
             Q(first_name__contains=query)|
             Q(last_name__contains=query)|
             Q(email__contains=query)
         )
-    else:
-        user_list = User.objects.all()
+
+    is_staff = ''
+    if user_type == 'Admin':
+        is_staff = True
+    elif user_type == "User":
+        is_staff = False
+        
+    if user_type != 'All':
+        user_list = User.objects.filter(is_staff=is_staff)
+
     params['user_list'] = user_list
     params['query'] = query
     return render(request, 'alvatross/user.html', params)
