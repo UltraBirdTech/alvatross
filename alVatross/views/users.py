@@ -12,7 +12,7 @@ def index(request):
         'login_user': request.user
     }
     user_list = User.objects.all()
-    query= request.GET.get("query", None)
+    query= request.GET.get("query", "")
     user_type = request.GET.get("user_type")
     user_list = User.objects.all()
     if query:
