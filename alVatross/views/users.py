@@ -29,7 +29,7 @@ def index(request):
     elif user_type == "User":
         is_staff = False
         
-    if user_type != 'All':
+    if user_type == 'Admin' or user_type == 'User':
         user_list = User.objects.filter(is_staff=is_staff)
 
     params['user_list'] = user_list
