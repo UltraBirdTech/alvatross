@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+import datetime
+import csv
+import urllib
 
 from ..models.post import Post
 from ..form.post import AddPostForm, EditPostForm
@@ -21,16 +24,27 @@ def index(request):
 
 def csv_export(request):
     params = {}
+    # create response.
     response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
-    query= request.GET.get("query", None)
+    date_time = datetime.datetime.now()
+    str_time = date_time.strftime('%Y%m%d%H%M')
+    f = "Post" + "_" + str_time + ".csv" 
+    file_name = urllib.parse.quote((f).encode("utf8"))
+    response['Content-Disposition'] = 'attachment; filename*=UTF-8\'\'{}'.format(file_name)
 
+    # search post.
+    query= request.GET.get("query", None)
     if query:
         post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
     else:
         post_list = Post.objects.all()
 
-    params['post_list'] = post_list
-    return render(request, 'alvatross/post.html', params)
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'TITLE', 'CONTENT', 'USER', 'CREATED AT', 'UPDATED AT'])
+    for post in post_list:
+        writer.writerow([post.id, post.title, post.content, post.user, post.created_at, post.updated_at])
+
+    return response
 
 @login_required
 def insert(request):
