@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 from ..models.post import Post
 from ..form.post import AddPostForm, EditPostForm
@@ -8,6 +9,19 @@ from ..form.post import AddPostForm, EditPostForm
 @login_required
 def index(request):
     params = {}
+    query= request.GET.get("query", None)
+
+    if query:
+        post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
+    else:
+        post_list = Post.objects.all()
+
+    params['post_list'] = post_list
+    return render(request, 'alvatross/post.html', params)
+
+def csv_export(request):
+    params = {}
+    response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
     query= request.GET.get("query", None)
 
     if query:
