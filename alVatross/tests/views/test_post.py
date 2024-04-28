@@ -40,8 +40,8 @@ class PostTest(TestCase):
     # test post csv export.
     ########################################
     def test_csv_export(self):
-        response = self.client.get('/alVatross/post/csv_export')
-        self.assertEqual(response.status_code, 301) # csv export.
+        response = self.client.get('/alVatross/post/csv_export/')
+        self.assertEqual(response.status_code, 200)
  
     ########################################
     # test post insert.
