@@ -50,6 +50,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# X-Frame-Options
+X_FRAME_OPTIONS = "allow"
+
+# Security Settings.
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
 ROOT_URLCONF = 'alVatross.urls'
 
 TEMPLATES = [
