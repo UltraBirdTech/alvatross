@@ -22,26 +22,32 @@
                         <h3>POST</h3>
                     </div>
                    <div class="card-body">
-                        <div class="col-md-8">
-                            <form method="get">
-                                <input type="search" 
-                                        value="{{ request.GET.query }}"
-                                        placeholder="Please input search Query."
-                                        name="query">
-                                <button>Search.</Button>
-                            </form>
-                            {% if request.GET.query %}
-                                Your search query is {{request.GET.query}}.
-                            {% endif %}
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <form method="get">
+                                        <input type="search" 
+                                                value="{{ request.GET.query }}"
+                                                placeholder="Please input search Query."
+                                                name="query" class="form-control">
+                                        <button class="btn btn-primary">Search.</button>
+                                    </form>
+                                    {% if request.GET.query %}
+                                        Your search query is {{request.GET.query}}.
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <form method="get" action="csv_export">
+                                    <input type="hidden" 
+                                            value="{{ request.GET.query }}">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary">CSV Export.</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <form method="get" action="csv_export">
-                                <input type="hidden" 
-                                        value="{{ request.GET.query }}">
-                                <button>CSV Export.</Button>
-                            </form>
-                        </div>
- 
+     
                         {% if post_list %}
                         <table class="table table-bordered">
                             <thead>
