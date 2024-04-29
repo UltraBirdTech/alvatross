@@ -11,7 +11,11 @@ from django.template import Context, Template
 from django.template import RequestContext
 from django.http import HttpResponse
 
+from ..models.logger import Logger
+
 def index(request):
+    logger = Logger()
+    logger.log_info('Access to Login Page.')
     params = {}
     if request.method == 'POST':
         name = request.POST.get('loginid', None)
@@ -19,6 +23,7 @@ def index(request):
         user_list = User.objects.filter(username=name)
         if len(user_list) == 0:
             error_message = "指定されたユーザが存在しません。"
+            logger.log_warn(error_message)
             params['error'] = [error_message]
             return render(request, 'alvatross/login.html', params)
 
@@ -26,14 +31,17 @@ def index(request):
         user = user_list[0]
         if check_password(password, user.password):
             login(request, user)
+            logger.log_info('Login is Success.')
             return redirect('/alVatross/')
 
         # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
         if password == user.password:
             login(request, user)
+            logger.log_info('Login is Success as not hash.')
             return redirect('/alVatross/')
 
         error_message = "パスワードが間違っています。"
+        logger.log_warn(error_message)
         params['error'] = [error_message]
         return render(request, 'alvatross/login.html', params)
     
