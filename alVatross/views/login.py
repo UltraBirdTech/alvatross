@@ -15,9 +15,9 @@ from ..models.logger import Logger
 
 def index(request):
     logger = Logger()
-    logger.log_info('Access to Login Page.')
     params = {}
     if request.method == 'POST':
+        logger.log_info('Start Login process.')
         name = request.POST.get('loginid', None)
         password = request.POST.get('password', None)
         user_list = User.objects.filter(username=name)
@@ -46,21 +46,27 @@ def index(request):
         return render(request, 'alvatross/login.html', params)
     
     # Get Rquest.
+    logger.log_info('Access to Login Page.')
     return render(request, 'alvatross/login.html', params)
 
 def logout(request):
+    logger = Logger()
     params = {}
     django_logout(request)
+    logger.log_info('Logout is Success.')
     return redirect('/alVatross/login')
 
 def forget_password(request):
     params = {}
+    logger = Logger()
 
     if request.method == 'POST':
+        logger.log_info('Start Pasword Remind.')
         name = request.POST.get('loginid', None)
         user_list = User.objects.filter(username=name)
         if len(user_list) == 0:
             error_message = "指定されたユーザが存在しません。"
+            logger.log_warn(error_message)
             params['error'] = [error_message]
             return render(request, 'alvatross/forget_password.html', params)
         
@@ -76,6 +82,8 @@ def forget_password(request):
         template = engine.from_string(template_code=template_code)
         context = RequestContext(request)
         context.push({"name": "TEST"})
+        logger.log_info('Password Remind is success.')
         return HttpResponse(template.render(context), request)
 
+    logger.log_info('Access to Password Remind.')
     return render(request, 'alvatross/forget_password.html', params)
