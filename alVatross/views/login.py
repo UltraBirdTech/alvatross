@@ -22,7 +22,7 @@ def index(request):
         password = request.POST.get('password', None)
         user_list = User.objects.filter(username=name)
         if len(user_list) == 0:
-            error_message = "指定されたユーザが存在しません。"
+            error_message = "指定されたユーザが存在しません。" + "[" + name + "]"
             logger.log_warn(error_message)
             params['error'] = [error_message]
             return render(request, 'alvatross/login.html', params)
@@ -31,7 +31,7 @@ def index(request):
         user = user_list[0]
         if check_password(password, user.password):
             login(request, user)
-            logger.log_info('Login is Success.')
+            logger.log_info('Login is Success.' + '[' + user.name + ']')
             return redirect('/alVatross/')
 
         # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
