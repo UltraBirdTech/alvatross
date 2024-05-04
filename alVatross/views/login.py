@@ -31,7 +31,7 @@ def index(request):
         user = user_list[0]
         if check_password(password, user.password):
             login(request, user)
-            logger.log_info('Login is Success.' + '[' + user.name + ']')
+            logger.log_info('Login is Success.' + '[' + user.username + ']')
             return redirect('/alVatross/')
 
         # [MEMO]: 脆弱性。ハッシュされていないパスワードでもチェックしてログインさせる。
