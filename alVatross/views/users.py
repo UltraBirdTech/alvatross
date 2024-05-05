@@ -5,9 +5,12 @@ from django.db.models import Q
 
 from django.contrib.auth.models import User
 from ..form.user import UserForm
+from ..models.logger import Logger
 
 @login_required
 def index(request):
+    logger = Logger()
+    logger.log_info('Access to User List.')
     params = {
         'login_user': request.user
     }
@@ -38,6 +41,8 @@ def index(request):
 
 @login_required
 def insert(request):
+    logger = Logger()
+    logger.log_info('Access to Insert User.')
     params = {
         'add_user_form': UserForm(),
         'login_user': request.user
@@ -56,14 +61,18 @@ def insert(request):
 
         # duplicate check.
         if User.objects.filter(username=user.username):
-             params['error'] = ['指定されたusernameは既に登録されています']
+             error_message = '指定されたusernameは既に登録されています'
+             params['error'] = [error_message]
+             logger.log_warn(error_message)
              return render(request, 'alvatross/insert_user.html', params)
 
         if not user.clean():
             user.save()
+            logger.log_info('Insert User is success.')
             return redirect('/alVatross/users/')
 
         params['error'] = user.error_messages
+        logger.log_warn(user.error_messages[0])
     return render(request, 'alvatross/insert_user.html', params)
 
 @login_required
