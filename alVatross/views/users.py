@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 from ..form.user import UserForm
 from ..models.logger import Logger
 
+logger = Logger()
 @login_required
 def index(request):
-    logger = Logger()
     logger.log_info('Access to User List.')
     params = {
         'login_user': request.user
@@ -41,7 +41,6 @@ def index(request):
 
 @login_required
 def insert(request):
-    logger = Logger()
     logger.log_info('Access to Insert User.')
     params = {
         'add_user_form': UserForm(),
@@ -77,6 +76,7 @@ def insert(request):
 
 @login_required
 def update(request, id):
+    logger.log_info('Access to Update User.')
     user = User.objects.get(id=id)
     params = {
         'edit_user_form': UserForm(instance=user),
@@ -94,11 +94,15 @@ def update(request, id):
 
         # duplicate check.
         if User.objects.filter(username=user.username):
-            params['error'] = ['指定されたusernameは既に登録されています']
+            error_message = '指定されたusernameは既に登録されています'
+            params['error'] = [error_message]
+            logger.log_info(error_message)
             return render(request, 'alvatross/update_user.html', params)
 
         if not user.clean():
             user.save()
+            logger.log_info('Update User is sucsess.')
+            logger.log_info('Update User Id: [' + str(user.id) + ']')
             return redirect('/alVatross/users/')
 
         params['error'] = post.error_messages
@@ -109,12 +113,18 @@ def delete(request, id):
     user= User.objects.get(id=id)
     params = {}
     if request.user.id == id:
-        params['error'] = '自分自身を削除することはできません'
+        error_message = '自分自身を削除することはできません'
+        params['error'] = error_message
+        logger.log_warn(error_message)
         return render(request, 'alvatross/user.html', params)
 
     if user.is_superuser:
-        params['error'] = '管理者権限ユーザは削除できません'
+        error_message = '管理者権限ユーザは削除できません'
+        params['error'] = error_message
+        logger.log_warn(error_message)
         return render(request, 'alvatross/user.html', params)
         
     user.delete()
+    logger.log_info('Delete User is sucsess.')
+    logger.log_info('Delete User Id: [' + str(user.id) + ']')
     return redirect('/alVatross/users')
