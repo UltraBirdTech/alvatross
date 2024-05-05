@@ -7,10 +7,13 @@ import csv
 import urllib
 
 from ..models.post import Post
+from ..models.logger import Logger
 from ..form.post import AddPostForm, EditPostForm
 
 @login_required
 def index(request):
+    logger = Logger()
+    logger.log_info('Access to Post List.')
     params = {}
     query= request.GET.get("query", None)
 
@@ -23,6 +26,8 @@ def index(request):
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
+    logger = Logger()
+    logger.log_info('Access to Export post as csv.')
     params = {}
     # create response.
     response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
@@ -48,6 +53,8 @@ def csv_export(request):
 
 @login_required
 def insert(request):
+    logger = Logger()
+    logger.log_info('Access to Insert Post.')
     params = {
         'add_post_form': AddPostForm(),
         'user': request.user
@@ -64,13 +71,17 @@ def insert(request):
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
+            logger.log_info('Insert Post is success.')
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
+        logger.log_info(post.error_messages[0])
     return render(request, 'alvatross/insert_post.html', params)
 
 @login_required
 def update(request, id):
+    logger = Logger()
+    logger.log_info('Access to Update Post.')
     post = Post.objects.get(id=id)
     params = {
         'edit_post_form': EditPostForm(instance=post),
@@ -86,13 +97,20 @@ def update(request, id):
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
+            logger.log_info('Update Post is success.')
+            logger.log_info('Update Post Id: [' + str(post.id) + ']')
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
+        logger.log_info(post.error_messages[0])
     return render(request, 'alvatross/update_post.html', params)
 
 @login_required
 def delete(request, id):
+    logger = Logger()
+    logger.log_info('Access to Delete Post.')
     post = Post.objects.get(id=id)
     post.delete()
+    logger.log_info('Delete Post is sucess.')
+    logger.log_info('Delete Post Id: [' + str(post.id) + ']')
     return redirect('/alVatross/post')
