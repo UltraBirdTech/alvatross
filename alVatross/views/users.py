@@ -99,8 +99,15 @@ def update(request, id):
 def delete(request, id):
     user= User.objects.get(id=id)
     params = {}
+    print('-' * 100)
+    print(request.user.id)
+    print(id)
+    print(request.user.id == id)
+    print('-' * 100)
     if request.user.id == id:
-        params['error'] = '自分自身を削除することはできません'
+        print('kiter?')
+        params['error'] = ['自分自身を削除することはできません']
+        print(params)
         return render(request, 'alvatross/user.html', params)
 
     if user.is_superuser:

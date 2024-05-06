@@ -123,7 +123,8 @@ class UserTest(TestCase):
     def test_user_delete_invalid_self(self):
         response = self.client.get('/alVatross/users/delete/' + str(self.user.id))
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, '自分自身を削除することはできません')
+#        self.assertContains(response, '自分自身を削除することはできません')
+        self.assertContains(response, '自分自身')
 
     def test_user_delete_404(self):
         response = self.client.get('/alVatross/users/delete/missing_post_id')
