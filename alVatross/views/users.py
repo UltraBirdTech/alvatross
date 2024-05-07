@@ -104,7 +104,7 @@ def delete(request, id):
         return render(request, 'alvatross/user.html', params)
 
     if user.is_superuser:
-        params['error'] = '管理者権限ユーザは削除できません'
+        params['error'] = ['管理者権限ユーザは削除できません']
         return render(request, 'alvatross/user.html', params)
         
     user.delete()
