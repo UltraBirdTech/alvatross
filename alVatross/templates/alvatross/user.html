@@ -44,6 +44,11 @@
                             {% if query %}
                                 Your search query is {{query | safe}}.
                             {% endif %}
+                            {% if error %}
+                                    {% for err in error %}
+                                    <font color="red">{{ err }}</font>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     <div class="card-body">
                         {% if user_list %}
