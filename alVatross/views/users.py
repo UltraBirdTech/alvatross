@@ -114,13 +114,13 @@ def delete(request, id):
     params = {}
     if request.user.id == id:
         error_message = '自分自身を削除することはできません'
-        params['error'] = error_message
+        params['error'] = [error_message]
         logger.log_warn(error_message)
         return render(request, 'alvatross/user.html', params)
 
     if user.is_superuser:
         error_message = '管理者権限ユーザは削除できません'
-        params['error'] = error_message
+        params['error'] = [error_message]
         logger.log_warn(error_message)
         return render(request, 'alvatross/user.html', params)
         

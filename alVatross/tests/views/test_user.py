@@ -123,11 +123,18 @@ class UserTest(TestCase):
     def test_user_delete_invalid_self(self):
         response = self.client.get('/alVatross/users/delete/' + str(self.user.id))
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, '自分自身を削除することはできません')
+        self.assertContains(response, '自分自身を削除することはできません')
+
+    def test_user_delete_invalid_admin(self):
+        user = User.objects.create(
+            username = 'test delete admin user',
+            is_superuser = True
+        )
+        response = self.client.get('/alVatross/users/delete/' + str(user.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '管理者権限ユーザは削除できません')
 
     def test_user_delete_404(self):
         response = self.client.get('/alVatross/users/delete/missing_post_id')
         self.assertEqual(response.status_code, 404)
-
-    # TODO: Should write test code about admin user deete.
 
