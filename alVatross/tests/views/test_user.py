@@ -138,5 +138,3 @@ class UserTest(TestCase):
         response = self.client.get('/alVatross/users/delete/missing_post_id')
         self.assertEqual(response.status_code, 404)
 
-    # TODO: Should write test code about admin user deete.
-
