@@ -27,6 +27,14 @@ class UserTest(TestCase):
         response = self.client.get('/alVatross/users/')
         self.assertEqual(response.status_code, 200)
 
+    def test_initialize_user_type_admin(self):
+        response = self.client.get('/alVatross/users/?user_type=Admin')
+        self.assertEqual(response.status_code, 200)
+
+    def test_initialize_user_type_user(self):
+        response = self.client.get('/alVatross/users/?user_type=User')
+        self.assertEqual(response.status_code, 200)
+
     ########################################
     # test user isnert.
     ######################################## 
