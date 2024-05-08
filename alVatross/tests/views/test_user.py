@@ -27,12 +27,16 @@ class UserTest(TestCase):
         response = self.client.get('/alVatross/users/')
         self.assertEqual(response.status_code, 200)
 
-    def test_initialize_user_type_admin(self):
+    def test_search_user_type_admin(self):
         response = self.client.get('/alVatross/users/?user_type=Admin')
         self.assertEqual(response.status_code, 200)
 
-    def test_initialize_user_type_user(self):
+    def test_search_user_type_user(self):
         response = self.client.get('/alVatross/users/?user_type=User')
+        self.assertEqual(response.status_code, 200)
+
+    def test_search_user_query(self):
+        response = self.client.get('/alVatross/users/?query=a')
         self.assertEqual(response.status_code, 200)
 
     ########################################
