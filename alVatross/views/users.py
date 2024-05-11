@@ -6,17 +6,19 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from ..form.user import UserForm
 from ..models.logger import Logger
+from ..form.user_type_form import UserTypeChoiceForm
 
 logger = Logger()
 @login_required
 def index(request):
     logger.log_info('Access to User List.')
-    params = {
-        'login_user': request.user
-    }
-    user_list = User.objects.all()
     query= request.GET.get("query", "")
     user_type = request.GET.get("user_type")
+    params = {
+        'login_user': request.user,
+        'user_type_choice_form': UserTypeChoiceForm(selected_option=user_type)
+    }
+ 
     user_list = User.objects.all()
     if query:
         user_list = User.objects.filter(
