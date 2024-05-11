@@ -26,14 +26,14 @@ def index(request):
             Q(email__contains=query)
         )
 
-    is_staff = ''
+    is_superuser = ''
     if user_type == 'Admin':
-        is_staff = True
+        is_superuser = True
     elif user_type == "User":
-        is_staff = False
+        is_superuser = False
         
     if user_type == 'Admin' or user_type == 'User':
-        user_list = User.objects.filter(is_staff=is_staff)
+        user_list = User.objects.filter(is_superuser=is_superuser)
 
     params['user_list'] = user_list
     params['query'] = query
