@@ -2,3 +2,4 @@ Django==2.1.5
 coverage
 bandit
 python-taint
+django-cors-headers
