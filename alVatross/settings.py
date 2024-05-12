@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'alVatross'
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +53,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'alVatross.urls'
+
+# CORS Seetings.
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = "https://kit.fontawesome.com/edc90b5721.js"
+CORS_PREFLIGHT_MAX_AGE = 60 * 30
 
 TEMPLATES = [
     {
