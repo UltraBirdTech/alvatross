@@ -68,3 +68,26 @@ $ coverage html
 Wrote HTML report to htmlcov/index.html
 ```
 
+## Docker
+### Build Image.
+```
+$ docker build -t alvatross:latest .
+```
+
+### Check Image.
+```
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+alvatross    latest    5e9a812f1aa2   4 minutes ago   977MB
+```
+## How To Controll.
+### START Sserver.
+```
+docker run -d -p 9000:8000 alvatross:latest
+```
+
+### STOP Server.
+```
+docker container stop [CONTAINER ID]
+```
+
