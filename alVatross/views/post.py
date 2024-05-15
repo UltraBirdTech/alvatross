@@ -80,13 +80,14 @@ def update(request, id):
     }
     if request.method == 'POST':
         params["edit_post_form"] = EditPostForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
         post = Post.objects.get(id=id)
         post.title = request.POST.get("title")
         post.content = request.POST.get("content")
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
+            redirect_url = request.POST.get("redirect_url")
+            redirect_url = redirect_url + '?success_message=POSTの更新に成功しました。'
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
@@ -96,4 +97,4 @@ def update(request, id):
 def delete(request, id):
     post = Post.objects.get(id=id)
     post.delete()
-    return redirect('/alVatross/post')
+    return redirect('/alVatross/post?success_message=POSTの削除に成功しました。')
