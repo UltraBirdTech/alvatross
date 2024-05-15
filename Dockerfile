@@ -8,7 +8,6 @@ RUN mkdir alvatross
 ADD ./alVatross/ /usr/src/app/alvatross/alVatross/
 ADD ./manage.py /usr/src/app/alvatross/
 ADD ./requirements.txt /usr/src/app/alvatross/
-ADD ./db.sqlite3 /usr/src/app/alvatross/
 WORKDIR /usr/src/app/alvatross/
 
 RUN pip install -r requirements.txt
