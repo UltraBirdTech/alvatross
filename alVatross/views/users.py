@@ -42,7 +42,6 @@ def insert(request):
     }
     if request.method == 'POST':
         params["add_user_form"] = UserForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
 
         user = User(
             username = request.POST.get("username"),
@@ -62,7 +61,7 @@ def insert(request):
         if not user.clean():
             user.save()
             logger.log_info('Insert User is success.')
-            return redirect('/alVatross/users/')
+            return redirect('/alVatross/users/?success_message=ユーザの新規登録に成功しました。')
 
         params['error'] = user.error_messages
         logger.log_warn(user.error_messages[0])
@@ -97,7 +96,7 @@ def update(request, id):
             user.save()
             logger.log_info('Update User is sucsess.')
             logger.log_info('Update User Id: [' + str(user.id) + ']')
-            return redirect('/alVatross/users/')
+            return redirect('/alVatross/users/?success_message=ユーザの更新に成功しました。')
 
         params['error'] = post.error_messages
     return render(request, 'alvatross/update_user.html', params)
@@ -121,4 +120,4 @@ def delete(request, id):
     user.delete()
     logger.log_info('Delete User is sucsess.')
     logger.log_info('Delete User Id: [' + str(user.id) + ']')
-    return redirect('/alVatross/users')
+    return redirect('/alVatross/users/?success_message=ユーザの削除に成功しました。')
