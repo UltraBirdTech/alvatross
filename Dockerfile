@@ -11,6 +11,11 @@ ADD ./requirements.txt /usr/src/app/alvatross/
 WORKDIR /usr/src/app/alvatross/
 
 RUN pip install -r requirements.txt
+RUN python manage.py migrate
+RUN python manage.py createsuperuser \
+    --noinput \
+    --username admin \
+    --email admin@example.com
 
 EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
