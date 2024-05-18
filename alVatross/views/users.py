@@ -5,6 +5,7 @@ from django.db.models import Q
 
 from django.contrib.auth.models import User
 from ..form.user import UserForm
+from ..form.user_update import UserUpdateForm
 from ..models.logger import Logger
 
 logger = Logger()
@@ -73,14 +74,13 @@ def update(request, id):
     logger.log_info('Access to Update User.')
     user = User.objects.get(id=id)
     params = {
-        'edit_user_form': UserForm(instance=user),
+        'edit_user_form': UserUpdateForm(instance=user),
         'login_user': request.user,
         'user': user 
     }
     if request.method == 'POST':
         params["edit_post_form"] = UserForm(data=request.POST)
         user = User.objects.get(id=id)
-        user.username = request.POST.get("username")
         user.email = request.POST.get("email")
         user.password = request.POST.get("password")[:20]
         user.first_name = request.POST.get("first_name")
