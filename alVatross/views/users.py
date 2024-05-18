@@ -86,13 +86,6 @@ def update(request, id):
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
 
-        # duplicate check.
-        if User.objects.filter(username=user.username):
-            error_message = '指定されたusernameは既に登録されています'
-            params['error'] = [error_message]
-            logger.log_info(error_message)
-            return render(request, 'alvatross/update_user.html', params)
-
         if not user.clean():
             user.save()
             logger.log_info('Update User is sucsess.')
