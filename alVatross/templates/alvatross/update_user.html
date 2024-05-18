@@ -17,10 +17,10 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            <form action="{% url 'update_user' id=user.id %}" method="post">
             <div class="col-md-12">
                 <table>
                     <div class="row">
-                    <form action="{% url 'update_user' id=user.id %}" method="post">
                         <div class="col-md-12">
                             <th>
                                 <label>User Name:</label>
@@ -31,7 +31,6 @@
                             {% csrf_token %}
                             {{ edit_user_form.as_table }}
                         </div>
-                   </form>
                     </div>
                 </table>
                 <div class="col-md-12">
@@ -39,6 +38,7 @@
                         <button type="submit" class="btn btn-primary btn-block">Update</button>
                     </div>
                 </div>
+               </form>
             </div>
             </div>
         </div>
