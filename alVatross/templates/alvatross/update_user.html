@@ -19,18 +19,26 @@
             </div>
             <div class="col-md-12">
                 <table>
+                    <div class="row">
                     <form action="{% url 'update_user' id=user.id %}" method="post">
                         <div class="col-md-12">
+                            <th>
+                                <label>User Name:</label>
+                            </th>
+                            <td>
+                                {{ user.username }}
+                            </td>
                             {% csrf_token %}
                             {{ edit_user_form.as_table }}
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Update</button>
-                            </div>
-                        </div>
-                    </form>
+                   </form>
+                    </div>
                 </table>
+                <div class="col-md-12">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </div>
             </div>
             </div>
         </div>
