@@ -22,12 +22,22 @@
                 <table>
                     <div class="row">
                         <div class="col-md-12">
-                            <th>
-                                <label>User Name:</label>
-                            </th>
-                            <td>
-                                {{ user.username }}
-                            </td>
+                            <tr>
+                                <th>
+                                    <label>User Name:</label>
+                                </th>
+                                <td>
+                                    {{ user.username }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>Password:</label>
+                                </th>
+                                <td>
+                                    <input type="password" name="new_password"></input>
+                                </td>
+                            </tr>
                             {% csrf_token %}
                             {{ edit_user_form.as_table }}
                         </div>
