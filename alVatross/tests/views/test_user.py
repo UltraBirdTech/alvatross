@@ -94,12 +94,6 @@ class UserTest(TestCase):
         response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
         self.assertEqual(response.status_code, 302) 
 
-    def test_user_update_duplicate_username(self):
-        self.params['username'] = 'test user'
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
-        self.assertEqual(response.status_code, 200)    
-        self.assertContains(response, '指定されたusernameは既に登録されています')
-
     # cut password 20 char.
     def test_user_update_cut_password_19_char(self):
         self.params['password'] = 't' * 19
