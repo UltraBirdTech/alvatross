@@ -82,7 +82,7 @@ def update(request, id):
         params["edit_post_form"] = UserForm(data=request.POST)
         user = User.objects.get(id=id)
         user.email = request.POST.get("email")
-        user.password = request.POST.get("password")[:20]
+        user.password = request.POST.get("new_password")[:20]
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
 

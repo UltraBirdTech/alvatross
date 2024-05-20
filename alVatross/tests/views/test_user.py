@@ -20,6 +20,14 @@ class UserTest(TestCase):
             'last_name': 'user'
         }
 
+        self.update_params = {
+            'username': 'test create user',
+            'email': 'test@example.jp',
+            'new_password': 'testuser',
+            'first_name': 'test',
+            'last_name': 'user'
+        }
+
     ########################################
     # test user list.
     ######################################## 
@@ -91,27 +99,27 @@ class UserTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_user_edit(self):
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302) 
 
     # cut password 20 char.
     def test_user_update_cut_password_19_char(self):
-        self.params['password'] = 't' * 19
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 19
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 19)
 
     def test_user_update_cut_password_20_char(self):
-        self.params['password'] = 't' * 20
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 20
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)
 
     def test_user_update_cut_password_21_char(self):
-        self.params['password'] = 't' * 21
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 21
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)
