@@ -50,7 +50,8 @@ def insert(request):
             email = request.POST.get("email"),
             password = request.POST.get("password")[0:20],
             first_name = request.POST.get("first_name"),
-            last_name = request.POST.get("last_name")
+            last_name = request.POST.get("last_name"),
+            is_superuser = request.POST.get("is_superuser")
         )
 
         # duplicate check.

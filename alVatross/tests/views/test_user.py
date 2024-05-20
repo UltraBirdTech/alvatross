@@ -17,7 +17,8 @@ class UserTest(TestCase):
             'email': 'test@example.jp',
             'password': 'testuser',
             'first_name': 'test',
-            'last_name': 'user'
+            'last_name': 'user',
+            'is_superuser': False
         }
 
         self.update_params = {
@@ -86,6 +87,12 @@ class UserTest(TestCase):
         user = User.objects.get(username=self.params['username'])
         self.assertEqual(user.password, 't' * 20)
 
+    def test_user_insert_as_adminuser(self):
+        self.params['is_superuser'] = True
+        response = self.client.post('/alVatross/users/insert', self.params)
+        self.assertEqual(response.status_code, 302)    
+        user = User.objects.get(username=self.params['username'])
+        self.assertTrue(user.is_superuser)
 
     ########################################
     # test user update.
