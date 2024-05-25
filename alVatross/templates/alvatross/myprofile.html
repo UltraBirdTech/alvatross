@@ -23,6 +23,14 @@
                             <div class="col-md-6">{{ login_user.email }}</div>
                         </div>
                         <div class="row">
+                            <div class="col-md-4">ユーザタイプ</div>
+                            {% if login_user.is_superuser %}
+                                <div class="col-md-6">Admin</div>
+                            {% else %}
+                                <div class="col-md-6">User</div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">姓</div>
                             <div class="col-md-6">{{ login_user.first_name }}</div>
                         </div>
