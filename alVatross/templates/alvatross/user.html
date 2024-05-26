@@ -48,6 +48,11 @@
                                     <font color="red">{{ err }}</font>
                                 {% endfor %}
                             {% endif %}
+                            {% if request.GET.success_message %}
+                                <div class="alert alert-success alert-dismissible col-md-12">
+                                    {{ rquest.GET.success_message }}
+                                </div>
+                            {% endif %}
                         </div>
                     <div class="card-body">
                         {% if user_list %}
