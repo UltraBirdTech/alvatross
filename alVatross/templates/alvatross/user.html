@@ -31,7 +31,6 @@
                                             value="{{ query }}"
                                             placeholder="Please input search Query."
                                             name="query" class="form-control">
-                                    <button class="btn btn-primary">Search.</button>
                                 </div>
                                 <div class="col-md-8">
                                     {% for field in user_type_choice_form %}
@@ -39,6 +38,7 @@
                                     {% endfor %}
 
                                 </div>
+                            <button class="btn btn-primary">Search.</button>
                             </form>
                             {% if query %}
                                 Your search query is {{query | safe}}.
