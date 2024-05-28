@@ -48,7 +48,8 @@
                             </div>
                             {% if request.GET.success_message %}
                                 <div class="alert alert-success alert-dismissible col-md-12">
-                                        {{ request.GET.success_message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    {{ request.GET.success_message }}
                                 </div>
                             {% endif %}
                         </div>
