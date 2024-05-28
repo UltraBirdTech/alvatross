@@ -10,29 +10,30 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-            <div class="col-md-12">
-                {% if error %}
-                    {% for err in error %}
-                        <font color="red">{{ err }}</font>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class="col-md-12">
-                <table>
+                <div class="col-md-12">
+                    {% if error %}
+                        {% for err in error %}
+                            <font color="red">{{ err }}</font>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
                     <form action="{% url 'insert_user' %}" method="post">
-                        <div class="col-md-12">
-                            {% csrf_token %}
-                            {{ add_user_form.as_table }}
-                            <input type="hidden" name="is_superuser" value="False">
-                        </div>
+                        <table>
+                            <div class="col-md-12">
+                                {% csrf_token %}
+                                {{ add_user_form.as_table }}
+                                <input type="hidden" name="is_superuser" value="False">
+                            </div>
+                        
+                        </table>
                         <div class="col-md-12">
                             <div class="col-4">
                                 <button type="submit" class="btn btn-primary btn-block">New User</button>
                             </div>
                         </div>
                     </form>
-                </table>
-            </div>
+                </div>
             </div>
         </div>
     </section>
