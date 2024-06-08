@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="col-md-12">
-    <h1> New Post </h1>
+    <h1> Create New Post </h1>
 </div>
 <div class_"row">
     <section class="content">
@@ -12,8 +12,8 @@
             <div class="card">
                 <div class="card-header">
                     <p>
-                        This page can create new post.
-                        Please input post information.
+                        It can create new post on this page.<br>
+                        Please input some post informations.
                     </p>
                     <div class="col-md-12">
                         {% if err %}
@@ -24,21 +24,24 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <form action="{% url 'insert_post' %}" method="post">
-                        <table>
-                            <div class="col-md-12">
-                                {% csrf_token %}
-                                {{ add_post_form.as_table }}
-                                <input type="hidden" name="user_id" value="{{ user.id }}">
-                                <input type="hidden" name="redirect_url" value="/alVatross/post">
-                            </div>
-                        </table>
-                        <div class="col-md-12">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">New Post</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="card-body">
+                        <form action="{% url 'insert_post' %}" method="post">
+                            <table>
+                                <div class="col-md-12">
+                                    {% csrf_token %}
+                                    {{ add_post_form.as_table }}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <input type="hidden" name="redirect_url" value="/alVatross/post">
+                                </div>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-block">Create New Post</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
