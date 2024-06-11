@@ -36,9 +36,10 @@
                                     {% for field in user_type_choice_form %}
                                         {{ field }}
                                     {% endfor %}
-
                                 </div>
-                            <button class="btn btn-primary">Search.</button>
+                                <div class="col-md-8">
+                                    <button class="btn btn-primary">Search.</button>
+                                </div>
                             </form>
                             {% if query %}
                                 Your search query is {{query | safe}}.
