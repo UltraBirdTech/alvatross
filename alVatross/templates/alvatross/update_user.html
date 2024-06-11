@@ -17,20 +17,38 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            <form action="{% url 'update_user' id=user.id %}" method="post">
             <div class="col-md-12">
                 <table>
-                    <form action="{% url 'update_user' id=user.id %}" method="post">
+                    <div class="row">
                         <div class="col-md-12">
+                            <tr>
+                                <th>
+                                    <label>User Name:</label>
+                                </th>
+                                <td>
+                                    {{ user.username }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label>Password:</label>
+                                </th>
+                                <td>
+                                    <input type="password" name="new_password"></input>
+                                </td>
+                            </tr>
                             {% csrf_token %}
                             {{ edit_user_form.as_table }}
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Update</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </table>
+                <div class="col-md-12">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </div>
+               </form>
             </div>
             </div>
         </div>

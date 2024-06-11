@@ -17,6 +17,15 @@ class UserTest(TestCase):
             'email': 'test@example.jp',
             'password': 'testuser',
             'first_name': 'test',
+            'last_name': 'user',
+            'is_superuser': False
+        }
+
+        self.update_params = {
+            'username': 'test create user',
+            'email': 'test@example.jp',
+            'new_password': 'testuser',
+            'first_name': 'test',
             'last_name': 'user'
         }
 
@@ -78,6 +87,12 @@ class UserTest(TestCase):
         user = User.objects.get(username=self.params['username'])
         self.assertEqual(user.password, 't' * 20)
 
+    def test_user_insert_as_adminuser(self):
+        self.params['is_superuser'] = True
+        response = self.client.post('/alVatross/users/insert', self.params)
+        self.assertEqual(response.status_code, 302)    
+        user = User.objects.get(username=self.params['username'])
+        self.assertTrue(user.is_superuser)
 
     ########################################
     # test user update.
@@ -91,33 +106,27 @@ class UserTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_user_edit(self):
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302) 
-
-    def test_user_update_duplicate_username(self):
-        self.params['username'] = 'test user'
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
-        self.assertEqual(response.status_code, 200)    
-        self.assertContains(response, '指定されたusernameは既に登録されています')
 
     # cut password 20 char.
     def test_user_update_cut_password_19_char(self):
-        self.params['password'] = 't' * 19
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 19
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 19)
 
     def test_user_update_cut_password_20_char(self):
-        self.params['password'] = 't' * 20
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 20
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)
 
     def test_user_update_cut_password_21_char(self):
-        self.params['password'] = 't' * 21
-        response = self.client.post('/alVatross/users/' + str(self.user.id), self.params)
+        self.update_params['new_password'] = 't' * 21
+        response = self.client.post('/alVatross/users/' + str(self.user.id), self.update_params)
         self.assertEqual(response.status_code, 302)    
         user = User.objects.get(id=self.user.id)
         self.assertEqual(user.password, 't' * 20)

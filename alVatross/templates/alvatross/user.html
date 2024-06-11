@@ -31,14 +31,14 @@
                                             value="{{ query }}"
                                             placeholder="Please input search Query."
                                             name="query" class="form-control">
-                                    <button class="btn btn-primary">Search.</button>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="user_type" class='custom-select'>
-                                        <option value=''>All</option>
-                                        <option value='Admin'>Admin</option>
-                                        <option value='User'>User</option>
-                                    </select>
+                                    {% for field in user_type_choice_form %}
+                                        {{ field }}
+                                    {% endfor %}
+                                </div>
+                                <div class="col-md-8">
+                                    <button class="btn btn-primary">Search.</button>
                                 </div>
                             </form>
                             {% if query %}
@@ -48,6 +48,11 @@
                                     {% for err in error %}
                                     <font color="red">{{ err }}</font>
                                 {% endfor %}
+                            {% endif %}
+                            {% if request.GET.success_message %}
+                                <div class="alert alert-success alert-dismissible col-md-12">
+                                    {{ rquest.GET.success_message }}
+                                </div>
                             {% endif %}
                         </div>
                     <div class="card-body">

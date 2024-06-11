@@ -10,28 +10,39 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-            <div class="col-md-12">
-                {% if error %}
-                    {% for err in error %}
-                        <font color="red">{{ err }}</font>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class="col-md-12">
-                <table>
-                    <form action="{% url 'insert_user' %}" method="post">
-                        <div class="col-md-12">
-                            {% csrf_token %}
-                            {{ add_user_form.as_table }}
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">New User</button>
-                            </div>
-                        </div>
-                    </form>
-                </table>
-            </div>
+                <div class="card-header">
+                    <div class="col-md-12">
+                        <p>
+                            Create User.<br>
+                            You can create new user.<br>
+                            Please input information to this page.<br>
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        {% if error %}
+                            {% for err in error %}
+                                <font color="red">{{ err }}</font>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <form action="{% url 'insert_user' %}" method="post">
+                            <table>
+                                {% csrf_token %}
+                                {{ add_user_form.as_table }}
+                                <input type="hidden" name="is_superuser" value="False">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary btn-block">Create.</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -23,8 +23,8 @@
                     </div>
                    <div class="card-body">
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="input-group">
+                            <div class="input-group">
+                                <div class="col-md-8">
                                     <form method="get">
                                         <input type="search" 
                                                 value="{{ request.GET.query }}"
@@ -36,7 +36,6 @@
                                         Your search query is {{request.GET.query}}.
                                     {% endif %}
                                 </div>
-                            </div>
                             <div class="col-md-4">
                                 <form method="get" action="csv_export">
                                     <input type="hidden" 
@@ -46,55 +45,63 @@
                                     </div>
                                 </form>
                             </div>
+                            {% if request.GET.success_message %}
+                                <div class="alert alert-success alert-dismissible col-md-12">
+                                        {{ request.GET.success_message }}
+                                </div>
+                            {% endif %}
+                            </div>
                         </div>
      
-                        {% if post_list %}
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>TITLE</th>
-                                    <th>CONTENT</th>
-                                    <th>CREATED USER</th>
-                                    <th>STATUS</th>
-                                    <th>CREATED</th>
-                                    <th>UPDATED</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                                {% for post in post_list %}
-                                <tr>
-                                    <td>{{ post.id }}</td>
-                                    <td>{{ post.title | safe}}</td>
-                                    <td>{{ post.content | safe }}</td>
-                                    <td>{{ post.user |safe }}</td>
-                                    <td>{{ post.status }}</td>
-                                    <td>{{ post.created_at }}</td>
-                                    <td>{{ post.updated_at }}</td>
-                                    <td>
-                                        {% if post.user == user %}
-                                            <form action="{% url 'update_post' id=post.id %}">
-                                                <button type="submit" class="btn btn-primary btn-block">Edit</button>
-                                            </form>
-                                            <form action="{% url 'delete_post' id=post.id %}" method="post">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-danger btn-block">Delete</button>
-                                            </form>
-                                        {% else %}
-                                            <form action="">
-                                                <button type="submit" class="btn btn-primary btn-block" disabled>Edit</button>
-                                            </form>
-                                            <form action="" method="post">
-                                                <button type="submit" class="btn btn-danger btn-block" disabled>Delete</button>
-                                            </form>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                        </table>
-                        {% else %}
-                            <p><font color="red">Post Data is Not Found.</font></p>
-                        {% endif %}
+                       <div class="card-body">
+                            {% if post_list %}
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>TITLE</th>
+                                        <th>CONTENT</th>
+                                        <th>CREATED USER</th>
+                                        <th>STATUS</th>
+                                        <th>CREATED</th>
+                                        <th>UPDATED</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                    {% for post in post_list %}
+                                    <tr>
+                                        <td>{{ post.id }}</td>
+                                        <td>{{ post.title | safe}}</td>
+                                        <td>{{ post.content | safe }}</td>
+                                        <td>{{ post.user |safe }}</td>
+                                        <td>{{ post.status }}</td>
+                                        <td>{{ post.created_at }}</td>
+                                        <td>{{ post.updated_at }}</td>
+                                        <td>
+                                            {% if post.user == user %}
+                                                <form action="{% url 'update_post' id=post.id %}">
+                                                    <button type="submit" class="btn btn-primary btn-block">Edit</button>
+                                                </form>
+                                                <form action="{% url 'delete_post' id=post.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                                                </form>
+                                            {% else %}
+                                                <form action="">
+                                                    <button type="submit" class="btn btn-primary btn-block" disabled>Edit</button>
+                                                </form>
+                                                <form action="" method="post">
+                                                    <button type="submit" class="btn btn-danger btn-block" disabled>Delete</button>
+                                                </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                            </table>
+                            {% else %}
+                                <p><font color="red">Post Data is Not Found.</font></p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

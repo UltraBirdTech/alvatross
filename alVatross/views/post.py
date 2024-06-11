@@ -7,10 +7,13 @@ import csv
 import urllib
 
 from ..models.post import Post
+from ..models.logger import Logger
 from ..form.post import AddPostForm, EditPostForm
 
 @login_required
 def index(request):
+    logger = Logger()
+    logger.log_info('Access to Post List.')
     params = {}
     query= request.GET.get("query", None)
 
@@ -23,6 +26,8 @@ def index(request):
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
+    logger = Logger()
+    logger.log_info('Access to Export post as csv.')
     params = {}
     # create response.
     response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
@@ -48,13 +53,14 @@ def csv_export(request):
 
 @login_required
 def insert(request):
+    logger = Logger()
+    logger.log_info('Access to Insert Post.')
     params = {
         'add_post_form': AddPostForm(),
         'user': request.user
     }
     if request.method == 'POST':
         params["add_post_form"] = AddPostForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
         post = Post(
             title   = request.POST.get("title"),
             content = request.POST.get("content"),
@@ -64,13 +70,19 @@ def insert(request):
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
+            logger.log_info('Insert Post is success.')
+            redirect_url = request.POST.get("redirect_url")
+            redirect_url = redirect_url + '?success_message=POSTの投稿に成功しました。'
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
+        logger.log_info(post.error_messages[0])
     return render(request, 'alvatross/insert_post.html', params)
 
 @login_required
 def update(request, id):
+    logger = Logger()
+    logger.log_info('Access to Update Post.')
     post = Post.objects.get(id=id)
     params = {
         'edit_post_form': EditPostForm(instance=post),
@@ -79,20 +91,28 @@ def update(request, id):
     }
     if request.method == 'POST':
         params["edit_post_form"] = EditPostForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
         post = Post.objects.get(id=id)
         post.title = request.POST.get("title")
         post.content = request.POST.get("content")
         post.clean()
         if len(post.error_messages) == 0:
             post.save()
+            logger.log_info('Update Post is success.')
+            logger.log_info('Update Post Id: [' + str(post.id) + ']')
+            redirect_url = request.POST.get("redirect_url")
+            redirect_url = redirect_url + '?success_message=POSTの更新に成功しました。'
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
+        logger.log_info(post.error_messages[0])
     return render(request, 'alvatross/update_post.html', params)
 
 @login_required
 def delete(request, id):
+    logger = Logger()
+    logger.log_info('Access to Delete Post.')
     post = Post.objects.get(id=id)
     post.delete()
-    return redirect('/alVatross/post')
+    logger.log_info('Delete Post is sucess.')
+    logger.log_info('Delete Post Id: [' + str(post.id) + ']')
+    return redirect('/alVatross/post?success_message=POSTの削除に成功しました。')

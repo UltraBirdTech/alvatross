@@ -5,18 +5,21 @@ from django.db.models import Q
 
 from django.contrib.auth.models import User
 from ..form.user import UserForm
+from ..form.user_update import UserUpdateForm
 from ..models.logger import Logger
+from ..form.user_type_form import UserTypeChoiceForm
 
 logger = Logger()
 @login_required
 def index(request):
     logger.log_info('Access to User List.')
-    params = {
-        'login_user': request.user
-    }
-    user_list = User.objects.all()
     query= request.GET.get("query", "")
     user_type = request.GET.get("user_type")
+    params = {
+        'login_user': request.user,
+        'user_type_choice_form': UserTypeChoiceForm(selected_option=user_type)
+    }
+ 
     user_list = User.objects.all()
     if query:
         user_list = User.objects.filter(
@@ -26,14 +29,8 @@ def index(request):
             Q(email__contains=query)
         )
 
-    is_staff = ''
-    if user_type == 'Admin':
-        is_staff = True
-    elif user_type == "User":
-        is_staff = False
-        
     if user_type == 'Admin' or user_type == 'User':
-        user_list = User.objects.filter(is_staff=is_staff)
+        user_list = User.objects.filter(is_superuser=user_type=='Admin')
 
     params['user_list'] = user_list
     params['query'] = query
@@ -48,14 +45,14 @@ def insert(request):
     }
     if request.method == 'POST':
         params["add_user_form"] = UserForm(data=request.POST)
-        redirect_url = request.POST.get("redirect_url")
 
         user = User(
             username = request.POST.get("username"),
             email = request.POST.get("email"),
             password = request.POST.get("password")[0:20],
             first_name = request.POST.get("first_name"),
-            last_name = request.POST.get("last_name")
+            last_name = request.POST.get("last_name"),
+            is_superuser = request.POST.get("is_superuser")
         )
 
         # duplicate check.
@@ -68,7 +65,7 @@ def insert(request):
         if not user.clean():
             user.save()
             logger.log_info('Insert User is success.')
-            return redirect('/alVatross/users/')
+            return redirect('/alVatross/users/?success_message=ユーザの新規登録に成功しました。')
 
         params['error'] = user.error_messages
         logger.log_warn(user.error_messages[0])
@@ -79,31 +76,23 @@ def update(request, id):
     logger.log_info('Access to Update User.')
     user = User.objects.get(id=id)
     params = {
-        'edit_user_form': UserForm(instance=user),
+        'edit_user_form': UserUpdateForm(instance=user),
         'login_user': request.user,
         'user': user 
     }
     if request.method == 'POST':
         params["edit_post_form"] = UserForm(data=request.POST)
         user = User.objects.get(id=id)
-        user.username = request.POST.get("username")
         user.email = request.POST.get("email")
-        user.password = request.POST.get("password")[:20]
+        user.password = request.POST.get("new_password")[:20]
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
-
-        # duplicate check.
-        if User.objects.filter(username=user.username):
-            error_message = '指定されたusernameは既に登録されています'
-            params['error'] = [error_message]
-            logger.log_info(error_message)
-            return render(request, 'alvatross/update_user.html', params)
 
         if not user.clean():
             user.save()
             logger.log_info('Update User is sucsess.')
             logger.log_info('Update User Id: [' + str(user.id) + ']')
-            return redirect('/alVatross/users/')
+            return redirect('/alVatross/users/?success_message=ユーザの更新に成功しました。')
 
         params['error'] = post.error_messages
     return render(request, 'alvatross/update_user.html', params)
@@ -128,4 +117,4 @@ def delete(request, id):
     user.delete()
     logger.log_info('Delete User is sucsess.')
     logger.log_info('Delete User Id: [' + str(user_id) + ']')
-    return redirect('/alVatross/users')
+    return redirect('/alVatross/users/?success_message=ユーザの削除に成功しました。')
