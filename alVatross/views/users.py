@@ -112,8 +112,9 @@ def delete(request, id):
         params['error'] = [error_message]
         logger.log_warn(error_message)
         return render(request, 'alvatross/user.html', params)
-        
+    
+    user_id = user.id
     user.delete()
     logger.log_info('Delete User is sucsess.')
-    logger.log_info('Delete User Id: [' + str(user.id) + ']')
+    logger.log_info('Delete User Id: [' + str(user_id) + ']')
     return redirect('/alVatross/users/?success_message=ユーザの削除に成功しました。')
