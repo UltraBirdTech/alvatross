@@ -10,12 +10,18 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="col-md-12">
-                    {% if error %}
-                        {% for err in error %}
-                            <font color="red">{{ err }}</font>
-                        {% endfor %}
-                    {% endif %}
+                <div class="card-header">
+                    <p>
+                        This page can create new post.
+                        Please input post information.
+                    </p>
+                    <div class="col-md-12">
+                        {% if error %}
+                            {% for err in error %}
+                                <font color="red">{{ err }}</font>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <form action="{% url 'insert_post' %}" method="post">
