@@ -10,46 +10,55 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-            <div class="col-md-12">
-                {% if error %}
-                    {% for err in error %}
-                        <font color="red">{{ err }}</font>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <form action="{% url 'update_user' id=user.id %}" method="post">
-            <div class="col-md-12">
-                <table>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <tr>
-                                <th>
-                                    <label>User Name:</label>
-                                </th>
-                                <td>
-                                    {{ user.username }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label>Password:</label>
-                                </th>
-                                <td>
-                                    <input type="password" name="new_password"></input>
-                                </td>
-                            </tr>
-                            {% csrf_token %}
-                            {{ edit_user_form.as_table }}
-                        </div>
+                <div class="card-header">
+                    <p>
+                        Update User.<br>
+                        Please input to user informations.
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        {% if error %}
+                            {% for err in error %}
+                                <font color="red">{{ err }}</font>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                </table>
-                <div class="col-md-12">
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    <form action="{% url 'update_user' id=user.id %}" method="post">
+                        <div class="col-md-12">
+                            <table>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <tr>
+                                            <th>
+                                                <label>User Name:</label>
+                                            </th>
+                                            <td>
+                                                {{ user.username }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <label>Password:</label>
+                                            </th>
+                                            <td>
+                                                <input type="password" name="new_password"></input>
+                                            </td>
+                                        </tr>
+                                        {% csrf_token %}
+                                        {{ edit_user_form.as_table }}
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-block">Update</button>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </div>
+                            </table>
+                      </form>
                     </div>
                 </div>
-               </form>
-            </div>
             </div>
         </div>
     </section>
