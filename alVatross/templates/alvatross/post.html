@@ -7,23 +7,25 @@
     <h1> Post List </h1>
 </div>
 <div class_"row">
-    <div class="col-md-12">
-        <form action="{% url 'insert_post' %}">
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">New Post</button>
-            </div>
-        </form>
-    </div>
     <section class="content">
         <div class="container-fluid">
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
-                        <p>
-                            This is a Post List Page.<br>
-                            It can add new Post, edit or delete.<br>
-                            If created, only the user who created it can update or delete it.<br>
-                        </p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>
+                                    This is a Post List Page.<br>
+                                    It can add new Post, edit or delete.<br>
+                                    If created, only the user who created it can update or delete it.<br>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <form action="{% url 'insert_post' %}">
+                                    <button type="submit" class="btn btn-primary btn-block">New Post</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                    <div class="card-body">
                         <div class="row">
