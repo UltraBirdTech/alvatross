@@ -7,24 +7,26 @@
     <h1> User </h1>
 </div>
 <div class_"row">
-    <div class="col-md-12">
-        {% if login_user.is_superuser %}
-        <form action="{% url 'insert_user' %}">
-            <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">New User</button>
-            </div>
-        </form>
-        {% endif %}
-    </div>
     <section class="content">
         <div class="container-fluid">
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
-                        <p>
-                            This page is Usre List.<br>
-                            It can add new User, Edit and Delete.<br>
-                        </p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>
+                                    This page is Usre List.<br>
+                                    It can add new User, Edit and Delete.<br>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                {% if login_user.is_superuser %}
+                                    <form action="{% url 'insert_user' %}">
+                                        <button type="submit" class="btn btn-primary btn-block">New User</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                    <div class="card-body">
                         <div class="col-md-8">
