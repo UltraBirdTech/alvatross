@@ -11,11 +11,17 @@
         <div class="container-fluid">
             <div class="card">
             <div class="card-header">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <p>
                         Update Post.<br>
                         Input information and push "Update" Button.
                     </p>
+                <div class="col-md-4">
+                    <a href="{% url 'post' %}" class="nav-link active">
+                        <button type="submit" class="btn btn-success btn-block">Return.</button>
+                    </a>
+                </div>
+                <div class="col-md-12">
                     {% if error %}
                         {% for err in error %}
                             <font color="red">{{ err }}</font>
