@@ -50,13 +50,17 @@
                                 Your search query is {{query | safe}}.
                             {% endif %}
                             {% if error %}
+                                <div class="col-md-8">
                                     {% for err in error %}
-                                    <font color="red">{{ err }}</font>
-                                {% endfor %}
+                                        <font color="red">{{ err }}</font>
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             {% if request.GET.success_message %}
-                                <div class="alert alert-success alert-dismissible col-md-12">
-                                    {{ request.GET.success_message }}
+                                <div class="col-md-8">
+                                    <div class="alert alert-success alert-dismissible">
+                                        {{ request.GET.success_message }}
+                                    </div>
                                 </div>
                             {% endif %}
                         </div>
