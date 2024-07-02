@@ -11,10 +11,19 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
-                    <p>
-                        Update User.<br>
-                        Please input to user informations.
-                    </p>
+                    <div class="row">
+                        <div class=col-md-8">
+                            <p>
+                                Update User.<br>
+                                Please input to user informations.
+                            </p>
+                        </div>
+                        <div class=col-md-4">
+                            <a href="{% url 'user_list' %}" class="nav-link active">
+                                <button type="submit" class="btn btn-success btn-block">Return.</button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
