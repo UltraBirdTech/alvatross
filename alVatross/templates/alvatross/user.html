@@ -29,38 +29,39 @@
                         </div>
                     </div>
                    <div class="card-body">
-                        <div class="col-md-8">
-                            <form method="get">
-                                <div class="col-md-8">
-                                    <input type="search" 
-                                            value="{{ query }}"
-                                            placeholder="Please input search Query."
-                                            name="query" class="form-control">
-                                </div>
-                                <div class="col-md-8">
-                                    {% for field in user_type_choice_form %}
-                                        {{ field }}
-                                    {% endfor %}
-                                </div>
-                                <div class="col-md-8">
-                                    <button class="btn btn-primary">Search.</button>
-                                </div>
-                            </form>
-                            {% if query %}
-                                Your search query is {{query | safe}}.
-                            {% endif %}
-                            {% if error %}
-                                    {% for err in error %}
-                                    <font color="red">{{ err }}</font>
+                        <form method="get">
+                            <div class="col-md-8">
+                                <input type="search" 
+                                        value="{{ query }}"
+                                        placeholder="Please input search Query."
+                                        name="query" class="form-control">
+                            </div>
+                            <div class="col-md-8">
+                                {% for field in user_type_choice_form %}
+                                    {{ field }}
                                 {% endfor %}
-                            {% endif %}
-                            {% if request.GET.success_message %}
-                                <div class="alert alert-success alert-dismissible col-md-12">
-                                    {{ request.GET.success_message }}
-                                </div>
-                            {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <button class="btn btn-primary">Search.</button>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if query %}
+                                    Your search query is {{query | safe}}.
+                                {% endif %}
+                                {% if error %}
+                                        {% for err in error %}
+                                        <font color="red">{{ err }}</font>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if request.GET.success_message %}
+                                    <div class="alert alert-success alert-dismissible">
+                                        {{ request.GET.success_message }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
-                    <div class="card-body">
                         {% if user_list %}
                         <table class="table table-bordered">
                             <thead>
