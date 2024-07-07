@@ -30,19 +30,28 @@
                     </div>
                    <div class="card-body">
                         <form method="get">
-                            <div class="col-md-8">
-                                <input type="search" 
-                                        value="{{ query }}"
-                                        placeholder="Please input search Query."
-                                        name="query" class="form-control">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="search" 
+                                            value="{{ query }}"
+                                            placeholder="Please input search Query."
+                                            name="query" class="form-control">
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                {% for field in user_type_choice_form %}
-                                    {{ field }}
-                                {% endfor %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                    User Type:
+                                </div>
+                                <div class="col-md-3">
+                                    {% for field in user_type_choice_form %}
+                                        {{ field }}
+                                    {% endfor %}
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <button class="btn btn-primary">Search.</button>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button class="btn btn-primary">Search.</button>
+                                </div>
                             </div>
                         </form>
                         <div class="row">
