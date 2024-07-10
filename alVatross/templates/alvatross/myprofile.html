@@ -19,15 +19,15 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">名前</div>
+                            <div class="col-md-4">User Name</div>
                             <div class="col-md-6">{{ login_user.username }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">メールアドレス</div>
+                            <div class="col-md-4">Mail Address</div>
                             <div class="col-md-6">{{ login_user.email }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">ユーザタイプ</div>
+                            <div class="col-md-4">User Type</div>
                             {% if login_user.is_superuser %}
                                 <div class="col-md-6">Admin</div>
                             {% else %}
@@ -35,15 +35,15 @@
                             {% endif %}
                         </div>
                         <div class="row">
-                            <div class="col-md-4">姓</div>
+                            <div class="col-md-4">First Name</div>
                             <div class="col-md-6">{{ login_user.first_name }}</div>
                         </div>
                          <div class="row">
-                            <div class="col-md-4">名</div>
+                            <div class="col-md-4">Last Name</div>
                             <div class="col-md-6">{{ login_user.last_name }}</div>
                         </div>
                          <div class="row">
-                            <div class="col-md-4">最終ログイン日時</div>
+                            <div class="col-md-4">Last Login Date</div>
                             <div class="col-md-6">{{ login_user.last_login }}</div>
                         </div>
  
