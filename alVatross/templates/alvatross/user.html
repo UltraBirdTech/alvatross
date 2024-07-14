@@ -20,6 +20,10 @@
                                     User data can udpate or delete only admin user.
                                 </p>
                             </div>
+                        </div>
+                     </div>
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-md-4">
                                 {% if login_user.is_superuser %}
                                     <form action="{% url 'insert_user' %}">
@@ -28,8 +32,8 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <form method="get">
+                        <form method="get">
+                            <div class="row">
                                 <div class="col-md-8">
                                     <input type="search" 
                                             value="{{ query }}"
@@ -44,10 +48,8 @@
                                 <div class="col-md-8">
                                     <button class="btn btn-primary">Search.</button>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card-body">
+                            </div>
+                        </form>
                         <div class="row">
                             <div class="col-md-12">
                                 {% if query %}
