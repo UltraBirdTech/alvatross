@@ -7,6 +7,7 @@ import csv
 import urllib
 
 from ..models.post import Post
+from django.contrib.auth.models import User
 from ..models.logger import Logger
 from ..form.post import AddPostForm, EditPostForm
 
@@ -16,6 +17,7 @@ def index(request):
     logger.log_info('Access to Post List.')
     params = {}
     query= request.GET.get("query", None)
+    params['user_list'] = User.objects.all()
 
     if query:
         post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
