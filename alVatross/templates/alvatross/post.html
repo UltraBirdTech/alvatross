@@ -36,20 +36,26 @@
                                                 value="{{ request.GET.query }}"
                                                 placeholder="Please input search Query."
                                                 name="query" class="form-control">
+                                        <select name="create_user" class="custom-select">
+                                            {% for user in user_list %}
+                                                <option value="{{ user.id }}">{{ user.username }}</option>
+                                            {% endfor %}
+                                        </select>
                                         <button class="btn btn-primary">Search.</button>
                                     </form>
                                     {% if request.GET.query %}
                                         Your search query is {{request.GET.query}}.
                                     {% endif %}
                                 </div>
-                            <div class="col-md-4">
-                                <form method="get" action="csv_export">
-                                    <input type="hidden" 
-                                            value="{{ request.GET.query }}">
-                                    <div class="col-md-6">
-                                        <button class="btn btn-primary">CSV Export.</button>
-                                    </div>
-                                </form>
+                                <div class="col-md-4">
+                                    <form method="get" action="csv_export">
+                                        <input type="hidden" 
+                                                value="{{ request.GET.query }}">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary">CSV Export.</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             {% if request.GET.success_message %}
                                 <div class="col-md-8">
