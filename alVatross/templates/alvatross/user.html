@@ -28,21 +28,28 @@
                                 {% endif %}
                             </div>
                         </div>
-                     </div>
                     <div class="card-body">
                         <form method="get">
                             <div class="row">
                                 <div class="col-md-8">
+                                <div class="col-md-12">
                                     <input type="search" 
                                             value="{{ query }}"
                                             placeholder="Please input search Query."
                                             name="query" class="form-control">
                                 </div>
-                                <div class="col-md-8">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    User Type:
+                                </div>
+                                <div class="col-md-3">
                                     {% for field in user_type_choice_form %}
                                         {{ field }}
                                     {% endfor %}
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-8">
                                     <button class="btn btn-primary">Search.</button>
                                 </div>
@@ -69,6 +76,25 @@
                                 {% endif %}
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            {% if error %}
+                                <div class="col-md-8">
+                                    {% for err in error %}
+                                        <font color="red">{{ err }}</font>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if request.GET.success_message %}
+                                <div class="col-md-8">
+                                    <div class="alert alert-success alert-dismissible">
+                                        {{ request.GET.success_message }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+>>>>>>> main
                         {% if user_list %}
                         <table class="table table-bordered">
                             <thead>
