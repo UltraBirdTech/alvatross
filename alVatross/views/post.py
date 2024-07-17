@@ -23,6 +23,10 @@ def index(request):
         post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
     else:
         post_list = Post.objects.all()
+    
+    username = request.GET.get("create_user", None)
+    if username:
+        post_list = Post.objects.filter(user=username)
 
     params['post_list'] = post_list
     return render(request, 'alvatross/post.html', params)
