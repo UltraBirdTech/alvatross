@@ -24,11 +24,13 @@ def index(request):
     else:
         post_list = Post.objects.all()
     
-    username = request.GET.get("create_user", None)
-    if username:
-        post_list = Post.objects.filter(user=username)
+    user_id = request.GET.get("create_user", None)
+    if user_id:
+        user_id = int(user_id)
+        post_list = Post.objects.filter(user=user_id)
 
     params['post_list'] = post_list
+    params['create_user_id'] = user_id
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
