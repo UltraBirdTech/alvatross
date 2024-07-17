@@ -37,9 +37,17 @@
                                                 placeholder="Please input search Query."
                                                 name="query" class="form-control">
                                         <select name="create_user" class="custom-select">
-                                            <option value="" default>指定しない</option>
+                                            {% if create_user_id %}
+                                                <option value="">指定しない</option>
+                                            {% else %}
+                                                <option value="" selected>指定しない</option>
+                                            {% endif %}
                                             {% for user in user_list %}
-                                                <option value="{{ user.id }}">{{ user.username }}</option>
+                                                {% if user.id == create_user_id %}
+                                                    <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                                {% else %}
+                                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         </select>
                                         <button class="btn btn-primary">Search.</button>
