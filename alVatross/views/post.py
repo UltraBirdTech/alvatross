@@ -7,6 +7,7 @@ import csv
 import urllib
 
 from ..models.post import Post
+from django.contrib.auth.models import User
 from ..models.logger import Logger
 from ..form.post import AddPostForm, EditPostForm
 
@@ -16,13 +17,20 @@ def index(request):
     logger.log_info('Access to Post List.')
     params = {}
     query= request.GET.get("query", None)
+    params['user_list'] = User.objects.all()
 
     if query:
         post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
     else:
         post_list = Post.objects.all()
+    
+    user_id = request.GET.get("create_user", None)
+    if user_id:
+        user_id = int(user_id)
+        post_list = Post.objects.filter(user=user_id)
 
     params['post_list'] = post_list
+    params['create_user_id'] = user_id
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
