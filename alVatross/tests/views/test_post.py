@@ -36,6 +36,16 @@ class PostTest(TestCase):
         response = self.client.get('/alVatross/post/')
         self.assertEqual(response.status_code, 200)
 
+    def test_search_post_list(self):
+        response = self.client.get('/alVatross/post/?query=test')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 1)
+
+    def test_search_post_list_None(self):
+        response = self.client.get('/alVatross/post/?query=Nothing Parameter')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 0)
+   
     ########################################
     # test post csv export.
     ########################################
