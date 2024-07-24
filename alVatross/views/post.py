@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.db.models import Q
 import datetime
 import csv
 import urllib
@@ -15,21 +16,25 @@ from ..form.post import AddPostForm, EditPostForm
 def index(request):
     logger = Logger()
     logger.log_info('Access to Post List.')
-    params = {}
-    query= request.GET.get("query", None)
-    params['user_list'] = User.objects.all()
 
-    if query:
-        post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
-    else:
-        post_list = Post.objects.all()
-    
+    query = Q()
+    search_query = request.GET.get("query", None)
+    if search_query:
+        query &= (Q(title__icontains=search_query)|Q(content__icontains=search_query))
+
     user_id = request.GET.get("create_user", None)
     if user_id:
         user_id = int(user_id)
-        post_list = Post.objects.filter(user=user_id)
+        query &= (Q(user=user_id))
 
+    if query:
+        post_list = Post.objects.filter(query)
+    else:
+        post_list = Post.objects.all()
+ 
+    params = {}
     params['post_list'] = post_list
+    params['user_list'] = User.objects.all()
     params['create_user_id'] = user_id
     return render(request, 'alvatross/post.html', params)
 
