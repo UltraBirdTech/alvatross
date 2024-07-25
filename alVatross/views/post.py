@@ -32,10 +32,11 @@ def index(request):
     else:
         post_list = Post.objects.all()
  
-    params = {}
-    params['post_list'] = post_list
-    params['user_list'] = User.objects.all()
-    params['create_user_id'] = user_id
+    params = {
+        'post_list': post_list,
+        'user_list': User.objects.all(),
+        'create_user_id': user_id
+    }
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
