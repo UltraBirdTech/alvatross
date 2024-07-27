@@ -75,19 +75,19 @@
                         </div>
                         <div class="card-body">
                             {% if post_list %}
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>TITLE</th>
-                                        <th>CONTENT</th>
-                                        <th>CREATED USER</th>
-                                        <th>STATUS</th>
-                                        <th>CREATED</th>
-                                        <th>UPDATED</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>TITLE</th>
+                                            <th>CONTENT</th>
+                                            <th>CREATED USER</th>
+                                            <th>STATUS</th>
+                                            <th>CREATED</th>
+                                            <th>UPDATED</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
                                     {% for post in post_list %}
                                     <tr>
                                         <td>{{ post.id }}</td>
@@ -117,7 +117,7 @@
                                         </td>
                                     </tr>
                                     {% endfor %}
-                            </table>
+                                </table>
                             {% else %}
                                 <p><font color="red">Post Data is Not Found.</font></p>
                             {% endif %}
