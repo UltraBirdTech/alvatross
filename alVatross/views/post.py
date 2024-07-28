@@ -17,21 +17,10 @@ def index(request):
     logger = Logger()
     logger.log_info('Access to Post List.')
 
-    query = Q()
     search_query = request.GET.get("query", None)
-    if search_query:
-        query &= (Q(title__icontains=search_query)|Q(content__icontains=search_query))
-
     user_id = request.GET.get("create_user", None)
-    if user_id:
-        user_id = int(user_id)
-        query &= (Q(user=user_id))
+    post_list = __private_search_post(search_query, user_id)
 
-    if query:
-        post_list = Post.objects.filter(query)
-    else:
-        post_list = Post.objects.all()
- 
     params = {
         'post_list': post_list,
         'user_list': User.objects.all(),
@@ -51,12 +40,9 @@ def csv_export(request):
     file_name = urllib.parse.quote((f).encode("utf8"))
     response['Content-Disposition'] = 'attachment; filename*=UTF-8\'\'{}'.format(file_name)
 
-    # search post.
-    query= request.GET.get("query", None)
-    if query:
-        post_list = Post.objects.raw('SELECT * FROM alvatross_post WHERE title=%s or content=%s', [query, query])
-    else:
-        post_list = Post.objects.all()
+    search_query = request.GET.get("query", None)
+    user_id = request.GET.get("create_user", None)
+    post_list = __private_search_post(search_query, user_id)
 
     writer = csv.writer(response)
     writer.writerow(['ID', 'TITLE', 'CONTENT', 'USER', 'CREATED AT', 'UPDATED AT'])
@@ -65,6 +51,22 @@ def csv_export(request):
 
     return response
 
+def __private_search_post(search_query, user_id):
+    post_list = []
+    query = Q()
+    if search_query:
+        query &= (Q(title__icontains=search_query)|Q(content__icontains=search_query))
+
+    if user_id:
+        user_id = int(user_id)
+        query &= (Q(user=user_id))
+
+    if query:
+        post_list = Post.objects.filter(query)
+    else:
+        post_list = Post.objects.all()
+    return post_list
+ 
 @login_required
 def insert(request):
     logger = Logger()
