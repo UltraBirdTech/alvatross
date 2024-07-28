@@ -76,6 +76,29 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['post_list']), 0)
 
+    def test_search_two_posts_in_post_list(self):
+        Post.objects.create(
+            title = 'test post 2',
+            content = 'test content',
+            status = 'active',
+            user_id = self.user.id
+        )
+        response = self.client.get('/alVatross/post/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 2)
+
+    def test_search_two_posts_in_post_list_search_one(self):
+        Post.objects.create(
+            title = 'test post 2',
+            content = 'test content',
+            status = 'active',
+            user_id = self.user.id
+        )
+        response = self.client.get('/alVatross/post/?query=test post 2')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 1)
+
+
     ########################################
     # test post csv export.
     ########################################
