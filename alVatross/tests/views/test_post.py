@@ -56,6 +56,26 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['post_list']), 0)
 
+    def test_search_post_list_with_query_and_create_user(self):
+        response = self.client.get('/alVatross/post/?query=test&create_user=1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 1)
+
+    def test_search_post_list_with_not_query_and_create_user(self):
+        response = self.client.get('/alVatross/post/?query=None&create_user=1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 0)
+
+    def test_search_post_list_with_query_and_not_create_user(self):
+        response = self.client.get('/alVatross/post/?query=test&create_user=100')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 0)
+
+    def test_search_post_list_with_not_query_and_not_create_user(self):
+        response = self.client.get('/alVatross/post/?query=None&create_user=100')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 0)
+
     ########################################
     # test post csv export.
     ########################################
