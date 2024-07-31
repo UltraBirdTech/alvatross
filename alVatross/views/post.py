@@ -52,20 +52,16 @@ def csv_export(request):
     return response
 
 def __private_search_post(search_query, user_id):
-    post_list = []
     query = Q()
     if search_query:
         query &= (Q(title__icontains=search_query)|Q(content__icontains=search_query))
 
     if user_id:
-        user_id = int(user_id)
-        query &= (Q(user=user_id))
+        query &= (Q(user=int(user_id)))
 
     if query:
-        post_list = Post.objects.filter(query)
-    else:
-        post_list = Post.objects.all()
-    return post_list
+        return Post.objects.filter(query)
+    return Post.objects.all()
  
 @login_required
 def insert(request):
