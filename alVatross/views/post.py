@@ -12,9 +12,9 @@ from django.contrib.auth.models import User
 from ..models.logger import Logger
 from ..form.post import AddPostForm, EditPostForm
 
+logger = Logger()
 @login_required
 def index(request):
-    logger = Logger()
     logger.log_info('Access to Post List.')
 
     search_query = request.GET.get("query", None)
@@ -29,7 +29,6 @@ def index(request):
     return render(request, 'alvatross/post.html', params)
 
 def csv_export(request):
-    logger = Logger()
     logger.log_info('Access to Export post as csv.')
     params = {}
     # create response.
@@ -65,7 +64,6 @@ def __private_search_post(search_query, user_id):
  
 @login_required
 def insert(request):
-    logger = Logger()
     logger.log_info('Access to Insert Post.')
     params = {
         'add_post_form': AddPostForm(),
@@ -93,7 +91,6 @@ def insert(request):
 
 @login_required
 def update(request, id):
-    logger = Logger()
     logger.log_info('Access to Update Post.')
     post = Post.objects.get(id=id)
     params = {
@@ -121,7 +118,6 @@ def update(request, id):
 
 @login_required
 def delete(request, id):
-    logger = Logger()
     logger.log_info('Access to Delete Post.')
     post = Post.objects.get(id=id)
     post.delete()
