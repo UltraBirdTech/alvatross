@@ -30,7 +30,6 @@ def index(request):
 
 def csv_export(request):
     logger.log_info('Access to Export post as csv.')
-    params = {}
     # create response.
     response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
     date_time = datetime.datetime.now()
