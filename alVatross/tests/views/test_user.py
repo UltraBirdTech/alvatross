@@ -67,6 +67,16 @@ class UserTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['user_list']), 0)
 
+    def test_search_user_admin_and_query_test(self):
+        response = self.client.get('/alVatross/users/?query=test&user_type=Admin')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_list']), 1)
+
+    def test_search_user_user_and_query_test(self):
+        response = self.client.get('/alVatross/users/?query=test&user_type=User')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_list']), 1)
+
     def test_search_user_admin_and_query_None(self):
         response = self.client.get('/alVatross/users/?query=None&user_type=User')
         self.assertEqual(response.status_code, 200)
