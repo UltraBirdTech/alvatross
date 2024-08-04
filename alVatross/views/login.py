@@ -13,8 +13,8 @@ from django.http import HttpResponse
 
 from ..models.logger import Logger
 
+logger = Logger()
 def index(request):
-    logger = Logger()
     params = {}
     if request.method == 'POST':
         logger.log_info('Start Login process.')
@@ -50,7 +50,6 @@ def index(request):
     return render(request, 'alvatross/login.html', params)
 
 def logout(request):
-    logger = Logger()
     params = {}
     django_logout(request)
     logger.log_info('Logout is Success.')
@@ -58,8 +57,6 @@ def logout(request):
 
 def forget_password(request):
     params = {}
-    logger = Logger()
-
     if request.method == 'POST':
         logger.log_info('Start Pasword Remind.')
         name = request.POST.get('loginid', None)
