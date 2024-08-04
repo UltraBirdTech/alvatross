@@ -15,10 +15,7 @@ def index(request):
     logger.log_info('Access to User List.')
     query= request.GET.get("query", "")
     user_type = request.GET.get("user_type")
-    params = {
-        'login_user': request.user,
-        'user_type_choice_form': UserTypeChoiceForm(selected_option=user_type)
-    }
+
     search_query = Q()
     user_list = []
     if query:
@@ -36,8 +33,12 @@ def index(request):
     else:
         user_list = User.objects.all()
 
-    params['user_list'] = user_list
-    params['query'] = query
+    params = {
+        'login_user': request.user,
+        'user_type_choice_form': UserTypeChoiceForm(selected_option=user_type),
+        'user_list': user_list,
+        'query': query
+    }
     return render(request, 'alvatross/user.html', params)
 
 @login_required
