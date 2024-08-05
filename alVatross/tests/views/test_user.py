@@ -7,7 +7,13 @@ class UserTest(TestCase):
     def setUp(self):
         self.user = User.objects.create(
             username = 'test user',
-            password = 'password'
+            password = 'password',
+            is_superuser = False 
+        )
+        self.admin_user = User.objects.create(
+            username = 'test admin user',
+            password = 'password',
+            is_superuser = True
         )
         self.client = Client()
         self.client.force_login(self.user)
@@ -39,14 +45,23 @@ class UserTest(TestCase):
     def test_search_user_type_admin(self):
         response = self.client.get('/alVatross/users/?user_type=Admin')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_list']), 1)
 
     def test_search_user_type_user(self):
         response = self.client.get('/alVatross/users/?user_type=User')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_list']), 1)
 
     def test_search_user_query(self):
+        response = self.client.get('/alVatross/users/?query=test')
+        self.assertEqual(response.status_code, 200)
+#        self.assertEqual(len(response.context['user_list']), 1)
+
+    def test_search_user_query_None(self):
         response = self.client.get('/alVatross/users/?query=a')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_list']), 0)
+
 
     ########################################
     # test user isnert.
