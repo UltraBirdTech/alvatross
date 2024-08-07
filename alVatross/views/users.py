@@ -23,6 +23,7 @@ def index(request):
     user_list = User.objects.all()
     if query:
         user_list = User.objects.filter(
+            Q(username__contains=query)|
             Q(id__contains=query)|
             Q(first_name__contains=query)|
             Q(last_name__contains=query)|
