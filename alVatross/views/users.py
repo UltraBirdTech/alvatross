@@ -19,19 +19,22 @@ def index(request):
         'login_user': request.user,
         'user_type_choice_form': UserTypeChoiceForm(selected_option=user_type)
     }
- 
-    user_list = User.objects.all()
+    search_query = Q()
+    user_list = []
     if query:
-        user_list = User.objects.filter(
-            Q(username__contains=query)|
-            Q(id__contains=query)|
-            Q(first_name__contains=query)|
-            Q(last_name__contains=query)|
-            Q(email__contains=query)
-        )
+        search_query &= (Q(username__contains=query)|
+                  Q(id__contains=query)|
+                  Q(first_name__contains=query)|
+                  Q(last_name__contains=query)|
+                  Q(email__contains=query))
 
-    if user_type == 'Admin' or user_type == 'User':
-        user_list = User.objects.filter(is_superuser=user_type=='Admin')
+    if user_type:
+        search_query &= (Q(is_superuser=user_type=='Admin'))
+
+    if search_query:
+        user_list = User.objects.filter(search_query)
+    else:
+        user_list = User.objects.all()
 
     params['user_list'] = user_list
     params['query'] = query
