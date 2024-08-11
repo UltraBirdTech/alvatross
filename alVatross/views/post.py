@@ -30,13 +30,14 @@ def index(request):
 
 def csv_export(request):
     logger.log_info('Access to Export post as csv.')
-    params = {}
-    # create response.
-    response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
-    date_time = datetime.datetime.now()
-    str_time = date_time.strftime('%Y%m%d%H%M')
+    
+    # create file name.
+    str_time = datetime.datetime.now().strftime('%Y%m%d%H%M')
     f = "Post" + "_" + str_time + ".csv" 
     file_name = urllib.parse.quote((f).encode("utf8"))
+
+    # create response.
+    response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
     response['Content-Disposition'] = 'attachment; filename*=UTF-8\'\'{}'.format(file_name)
 
     search_query = request.GET.get("query", None)
