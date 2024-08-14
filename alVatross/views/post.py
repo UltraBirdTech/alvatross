@@ -83,7 +83,7 @@ def insert(request):
             post.save()
             logger.log_info('Insert Post is success.')
             redirect_url = request.POST.get("redirect_url")
-            redirect_url = redirect_url + '?success_message=Success to crete new Post.'
+            redirect_url = redirect_url + '?success_message=Success to create new Post.'
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
@@ -110,7 +110,7 @@ def update(request, id):
             logger.log_info('Update Post is success.')
             logger.log_info('Update Post Id: [' + str(post.id) + ']')
             redirect_url = request.POST.get("redirect_url")
-            redirect_url = redirect_url + '?success_message=Sccess to Update Post.'
+            redirect_url = redirect_url + '?success_message=Success to Update Post.'
             return redirect(redirect_url)
 
         params['error'] = post.error_messages
