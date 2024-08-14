@@ -186,7 +186,7 @@ class PostTest(TestCase):
         self.params['redirect_url'] = 'https://example.com/'
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, 'https://example.com/?success_message=POST%E3%81%AE%E6%8A%95%E7%A8%BF%E3%81%AB%E6%88%90%E5%8A%9F%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82')
+        self.assertEqual(response.url, 'https://example.com/?success_message=Success%20to%20create%20new%20Post.')
 
     ########################################
     # test post edit.
@@ -272,7 +272,7 @@ class PostTest(TestCase):
         self.params['redirect_url'] = 'https://example.com/'
         response = self.client.post('/alVatross/post/' + str(self.post.id), self.params)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, 'https://example.com/?success_message=POST%E3%81%AE%E6%9B%B4%E6%96%B0%E3%81%AB%E6%88%90%E5%8A%9F%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82')
+        self.assertEqual(response.url, 'https://example.com/?success_message=Success%20to%20Update%20Post.')
 
     ########################################
     # test post delete.
