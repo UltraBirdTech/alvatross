@@ -137,9 +137,13 @@ class PostTest(TestCase):
 
     # title
     def test_post_insert_success_title_99_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['title'] = 't' * 99
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2) #add 1 post.
 
     def test_post_insert_success_title_100_char(self):
         self.params['title'] = 't' * 100
