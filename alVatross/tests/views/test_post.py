@@ -98,6 +98,20 @@ class PostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['post_list']), 1)
 
+    def test_search_two_posts_in_post_list_search_one(self):
+        user = User.objects.create(
+            username = 'test_user2'
+        )
+        Post.objects.create(
+            title = 'test post 2',
+            content = 'test content',
+            status = 'active',
+            user_id = user.id
+        )
+
+        response = self.client.get('/alVatross/post/?create_user=' + str(user.id))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['post_list']), 1)
 
     ########################################
     # test post csv export.
@@ -123,9 +137,13 @@ class PostTest(TestCase):
 
     # title
     def test_post_insert_success_title_99_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['title'] = 't' * 99
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2) #add 1 post.
 
     def test_post_insert_success_title_100_char(self):
         self.params['title'] = 't' * 100
@@ -322,5 +340,4 @@ class IndexBeforePostTest(TestCase):
         response = self.client.get('/alVatross/post/delete/' + str(self.post.id))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/alVatross/login?next=/alVatross/post/delete/' + str(self.post.id))
-
 
