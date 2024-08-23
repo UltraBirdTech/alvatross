@@ -155,11 +155,15 @@ class PostTest(TestCase):
         self.assertEqual(len(post_list), 2) #add 1 post.
 
     def test_post_insert_invalid_title_101_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['title'] = 't' * 101
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'タイトルの文字数が100文字を超えています')
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
+ 
     # XSSを挿れてもエラーにならない
     def test_post_insert_success_title_XSS(self):
         self.params['title'] = '<s>test</s>'
