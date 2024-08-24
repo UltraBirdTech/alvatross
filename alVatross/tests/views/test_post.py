@@ -166,10 +166,14 @@ class PostTest(TestCase):
  
     # XSSを挿れてもエラーにならない
     def test_post_insert_success_title_XSS(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['title'] = '<s>test</s>'
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2)
+ 
     # contents
     def test_post_insert_success_content_4999_char(self):
         self.params['content'] = 't' * 4999
