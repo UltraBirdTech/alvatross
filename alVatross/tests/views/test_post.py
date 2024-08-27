@@ -176,10 +176,14 @@ class PostTest(TestCase):
  
     # contents
     def test_post_insert_success_content_4999_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['content'] = 't' * 4999
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2)
+ 
     def test_post_insert_success_content_5000_char(self):
         self.params['content'] = 't' * 5000
         response = self.client.post('/alVatross/post/insert', self.params)
