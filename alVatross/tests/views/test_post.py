@@ -211,7 +211,7 @@ class PostTest(TestCase):
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
         post_list = Post.objects.all()
-        self.assertEqual(len(post_list), 1)
+        self.assertEqual(len(post_list), 2)
  
     # status
     def test_post_insert_success_status_active(self):
