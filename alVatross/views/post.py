@@ -24,7 +24,7 @@ def index(request):
     params = {
         'post_list': post_list,
         'user_list': User.objects.all(),
-        'create_user_id': user_id
+        'create_user_id': int(user_id)
     }
     return render(request, 'alvatross/post.html', params)
 
