@@ -57,7 +57,11 @@
                                 <div class="col-md-4">
                                     <form method="get" action="csv_export">
                                         <input type="hidden" 
+                                                name="query"
                                                 value="{{ request.GET.query }}">
+                                        <input type="hidden"
+                                               name="create_user"
+                                               value="{{ create_user_id }}">
                                         <div class="col-md-6">
                                             <button class="btn btn-primary">CSV Export.</button>
                                         </div>
