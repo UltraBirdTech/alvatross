@@ -176,27 +176,43 @@ class PostTest(TestCase):
  
     # contents
     def test_post_insert_success_content_4999_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['content'] = 't' * 4999
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2)
+ 
     def test_post_insert_success_content_5000_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['content'] = 't' * 5000
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2)
+ 
     def test_post_insert_invalid_content_5001_char(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['content'] = 't' * 5001
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'コンテンツの文字数が5000文字を超えています')
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
 
     # XSSを挿れてもエラーにならない
     def test_post_insert_success_content_XSS(self):
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 1)
         self.params['content'] = '<s>test</s>'
         response = self.client.post('/alVatross/post/insert', self.params)
         self.assertEqual(response.status_code, 302)
-
+        post_list = Post.objects.all()
+        self.assertEqual(len(post_list), 2)
+ 
     # status
     def test_post_insert_success_status_active(self):
         self.params['status'] = 'active'
