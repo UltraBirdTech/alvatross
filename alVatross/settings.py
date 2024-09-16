@@ -51,6 +51,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'alVatross.urls'
+#AUTH_USER_MODEL = 'alVatross.models.user.CustomUser'
+# from .models.user import CustomUser
+AUTH_USER_MODEL = 'alVatross.CustomUser'
 
 TEMPLATES = [
     {
